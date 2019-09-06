@@ -41,7 +41,7 @@ public class SteamUsers {
         
         // Printando resultados Completos da API
         // System.out.println(fullPlayerData);
-        
+       
         // Criação do Objeto JSON que recebe os dados (Para poder dividir e organizar os campos)
         JSONObject fullJSONData = new JSONObject(fullPlayerData);
 
@@ -53,8 +53,6 @@ public class SteamUsers {
         
         //Criando Sub Níveis para organizar o JSON -- Nível 3 (Final);
         JSONObject playerData = arrayPlayerData.getJSONObject(0);
-        
-        Integer profilestate = ValidadeJSON.getJSONInt(playerData, "profilestate");
         
         //Armazenando dados do Player:
         String nickname = ValidadeJSON.getJSONString(playerData, "personaname");
@@ -103,4 +101,5 @@ public class SteamUsers {
               default: return null;
           }
        }
+       
 }
