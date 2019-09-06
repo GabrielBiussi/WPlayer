@@ -19,9 +19,6 @@ import org.json.JSONObject;
  */
 public class SteamUsers {
     public static void main(String[] args) throws MalformedURLException, IOException {
-        // Variável String que armazena nossa KEY
-            String key = "3831A87503D7D84D68550EE188077B1D";
-        
         // Constante String que grava a steamID do nosso usuário (Teste: Gui)
          //String steamid = "76561198320279811";
          String steamid = "76561198166467789";
