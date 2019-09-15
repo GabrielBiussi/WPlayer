@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wplayer.wperformance;
+package wplayer.steam.api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import org.json.JSONObject;
  *
  * @author petter
  */
-public class SteamUsers {
+public class SteamUser {
     public static void main(String[] args) throws MalformedURLException, IOException {
         // Constante String que grava a steamID do nosso usuário (Teste: Gui)
          //String steamid = "76561198320279811";

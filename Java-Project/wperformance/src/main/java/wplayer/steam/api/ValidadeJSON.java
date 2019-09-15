@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wplayer.wperformance;
+package wplayer.steam.api;
 
 import org.json.JSONObject;
 
@@ -12,7 +12,7 @@ import org.json.JSONObject;
  * @author petter
  */
 public class ValidadeJSON {
-    public static String getJSONString(JSONObject JSON, String field){
+        public static String getJSONString(JSONObject JSON, String field){
         try{
             String result = JSON.getString(field);
             return result;

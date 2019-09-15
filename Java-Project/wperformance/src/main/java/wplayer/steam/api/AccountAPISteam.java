@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wplayer.wperformance;
+package wplayer.steam.api;
 
 /**
  *
@@ -11,7 +11,7 @@ package wplayer.wperformance;
  */
 public class AccountAPISteam {
     // Variável String que armazena nossa KEY
-    public static String key = "3831A87503D7D84D68550EE188077B1D";
+    public static final String key = "3831A87503D7D84D68550EE188077B1D";
     // Variável String que armazena nosso DomainName
-    public static String domain = "WPlayed";
+    public static final String domain = "WPlayed";
 }
