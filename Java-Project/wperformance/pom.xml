@@ -16,5 +16,10 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>7.4.1.jre8</version>
         </dependency>
+        <dependency>
+             <groupId>org.json</groupId>
+             <artifactId>json</artifactId>
+             <version>20190722</version>
+        </dependency>
     </dependencies>
 </project>
