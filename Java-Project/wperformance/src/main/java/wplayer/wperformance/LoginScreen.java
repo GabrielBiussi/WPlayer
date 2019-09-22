@@ -53,7 +53,7 @@ public class LoginScreen extends javax.swing.JFrame {
         linkForgetPass.setText("<html><u>Esqueci minha senha</u></html>");
         linkForgetPass.setToolTipText("");
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/wplayer/icons/logo-login.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-login.png"))); // NOI18N
 
         lblCopyright.setForeground(new java.awt.Color(153, 153, 153));
         lblCopyright.setText("ALL RIGHTS RESERVED. ™ ® & COPYRIGHT © 2019");
