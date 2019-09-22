@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package wplayer.steam.api;
+package wplayer.json;
 
 import org.json.JSONObject;
 
@@ -17,7 +12,7 @@ public class ValidadeJSON {
             String result = JSON.getString(field);
             return result;
         }
-        catch(RuntimeException e){
+        catch(RuntimeException ex){
             return null;
         }
     }
@@ -27,7 +22,7 @@ public class ValidadeJSON {
             Integer result = JSON.getInt(field);
             return result;
         }
-        catch(RuntimeException e){
+        catch(RuntimeException ex){
             return null;
         }
     }

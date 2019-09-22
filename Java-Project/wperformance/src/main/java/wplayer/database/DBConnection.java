@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wplayer.database;
 
 import java.sql.Connection;
@@ -39,6 +34,7 @@ public class DBConnection {
             System.err.println("Erro ao fechar Conexão:" +ex);
         }
     }
+    
     public static void closeConnection(Connection connection, Statement statement){
         try {
             if(statement != null)
@@ -49,6 +45,7 @@ public class DBConnection {
         
         closeConnection(connection);
     }
+    
     public static void closeConnection(Connection connection, Statement statement, ResultSet resultSet){
         try {
             if(resultSet != null)

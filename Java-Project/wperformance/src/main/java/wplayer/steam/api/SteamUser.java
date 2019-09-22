@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wplayer.steam.api;
 
-import java.io.BufferedReader;
+import wplayer.json.ValidadeJSON;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,27 +19,8 @@ public class SteamUser {
         
         // Formação de uma String para URL (Concatenando as variáveis ao link da API da steam)
         String http = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+AccountAPISteam.key+"&steamids="+steamid;
-        
-        // Criação da variável do tipo URL (Para poder fazer conexão, mas é o mesmo link que criamos antes) 
-        URL getPlayerData = new URL(http);
-        
-        // Criação da variável InputStreamReader, abrindo conexão com a API)
-        InputStreamReader request = new InputStreamReader(getPlayerData.openStream());
-        
-        // Criação da variável do tipo BufferedReader, para fazer a leitura dos dados recebidos
-        BufferedReader data = new BufferedReader(request);
-        
-        // Criação da variável String que contém os dados capturados da API.
-        String fullPlayerData = data.readLine();
-        
-        // Printando resultados Completos da API
-        // System.out.println(fullPlayerData);
-       
-        // Criação do Objeto JSON que recebe os dados (Para poder dividir e organizar os campos)
-        JSONObject fullJSONData = new JSONObject(fullPlayerData);
 
-        //Criando Sub Níveis para organizar o JSON -- Nível 1
-        JSONObject refinedFullPlayerData  = fullJSONData.getJSONObject("response");
+        JSONObject refinedFullPlayerData = RequestAPI.getJSON(http).getJSONObject("response");
         
         //Criando Sub Níveis para organizar o JSON -- Nível 2 (Array);
         JSONArray arrayPlayerData = refinedFullPlayerData.getJSONArray("players");
