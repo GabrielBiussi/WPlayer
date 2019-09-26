@@ -48,37 +48,67 @@ public class DBQuery {
         ArrayList<String> containList = new ArrayList<String>();
         String records = "";
         
-        for(String row : rows)
-            records += String.format("'%s',", row);
-        
-        records = records.substring(0, records.length() - 1);
-        
-        String query = String.format("SELECT"
-                                          + " * "
-                                     + "FROM %s "
-                                    + "WHERE %s IN (%s)", table, field, records);
-        
-        try{
-           connection = DBConnection.getConnection();
-           statement = connection.createStatement();
-           
-           resultSet = statement.executeQuery(query);
-           
-           while(resultSet.next()){
-              containList.add(resultSet.getString(field));
-           }
-           
-           for(String row : rows)
-               listRows.put(row, containList.contains(row));
+        if(rows.toArray().length < 10){
 
-           return listRows;
-           
-        }catch(SQLException ex){
-            System.err.println("Erro (hasRowsInTable): " +ex);
-        }finally{
-            DBConnection.closeConnection(connection, statement, resultSet);
+            for(String row : rows)
+                records += String.format("'%s',", row);
+
+            records = records.substring(0, records.length() - 1);
+
+            String query = String.format("SELECT"
+                                              + " * "
+                                         + "FROM %s "
+                                        + "WHERE %s IN (%s)", table, field, records);
+
+            try{
+               connection = DBConnection.getConnection();
+               statement = connection.createStatement();
+
+               resultSet = statement.executeQuery(query);
+
+               while(resultSet.next()){
+                  containList.add(resultSet.getString(field));
+               }
+
+               for(String row : rows)
+                   listRows.put(row, containList.contains(row));
+
+               return listRows;
+
+            }catch(SQLException ex){
+                System.err.println("Erro (hasRowsInTable -IF): " +ex);
+            }finally{
+                DBConnection.closeConnection(connection, statement, resultSet);
+            }
         }
         
-        return null;
+        else{
+            String query = String.format("SELECT"
+                                              + " %s "
+                                         + "FROM %s", field, table);
+            
+            try{
+               connection = DBConnection.getConnection();
+               statement = connection.createStatement();
+
+               resultSet = statement.executeQuery(query);
+
+               while(resultSet.next()){
+                  containList.add(resultSet.getString(field));
+               }
+
+               for(String row : rows)
+                   listRows.put(row, containList.contains(row));
+
+               return listRows;
+
+            }catch(SQLException ex){
+                System.err.println("Erro (hasRowsInTable -ELSE): " +ex);
+            }finally{
+                DBConnection.closeConnection(connection, statement, resultSet);
+            }
+            
+        }
+            return null;
     }
 }

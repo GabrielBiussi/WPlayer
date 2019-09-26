@@ -1,6 +1,14 @@
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import wplayer.database.DBConnection;
 import wplayer.database.DBQuery;
+import wplayer.json.ValidadeJSON;
+import wplayer.steam.api.RequestAPI;
+import wplayer.steam.api.SteamGames;
 
 /**
  *
@@ -22,24 +30,24 @@ public class TestMethods {
 
             
           
-            ArrayList<String> appIds = new ArrayList<>();
-            
-            appIds.add("985530");
-            appIds.add("1223");
-            appIds.add("424223");
-            appIds.add("5555");
-            appIds.add("992970");
-            appIds.add("993100");
-            
-            
-            Map<String, Boolean> results = DBQuery.hasRowsInTable(appIds, "idApp", "GAMES");
-            
-           for (String str : results.keySet()) {
-                if(results.get(str))
-                    System.out.println("Sim: " +str);
-                else
-                    System.out.println("Não: " +str);
-        }
+//            ArrayList<String> appIds = new ArrayList<>();
+//            
+//            appIds.add("985530");
+//            appIds.add("1223");
+//            appIds.add("424223");
+//            appIds.add("5555");
+//            appIds.add("992970");
+//            appIds.add("993100");
+//            
+//            
+//            Map<String, Boolean> results = DBQuery.hasRowsInTable(appIds, "idApp", "GAMES");
+//            
+//           for (String str : results.keySet()) {
+//                if(results.get(str))
+//                    System.out.println("Sim: " +str);
+//                else
+//                    System.out.println("Não: " +str);
+//        }
             
         
 //        Connection connection = null;
@@ -56,6 +64,25 @@ public class TestMethods {
 //        } finally{
 //            DBConnection.closeConnection(connection, statement, resultSet);
 //        }
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TABLE GAMES 
+       // SteamGames.updateTableGames();    
     }
 }
