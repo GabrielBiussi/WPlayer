@@ -9,6 +9,7 @@ import wplayer.database.DBQuery;
 import wplayer.json.ValidadeJSON;
 import wplayer.steam.api.RequestAPI;
 import wplayer.steam.api.SteamGames;
+import wplayer.steam.api.SteamPlayer;
 
 /**
  *
@@ -17,6 +18,8 @@ import wplayer.steam.api.SteamGames;
 public class TestMethods {
     public static void main(String[] args) {
         
+        
+        SteamPlayer.updatePlayers("76561198337074506");
 //        System.out.println("Esse Existe:" +
 //                DBQuery.hasRowInTable("985530", "idApp", "GAMES"));
 //        System.out.println("Esse Não:" +
@@ -27,7 +30,7 @@ public class TestMethods {
 //                DBQuery.hasRowInTable("5555", "idApp", "GAMES"));
 
             
-
+            //SteamGames.updateAppsTable();
             
           
 //            ArrayList<String> appIds = new ArrayList<>();
@@ -83,6 +86,7 @@ public class TestMethods {
 
 
 // TABLE GAMES 
-       // SteamGames.updateTableGames();    
+
+        
     }
 }

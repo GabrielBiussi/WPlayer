@@ -1,0 +1,15 @@
+wplayer/database/DBQuery.class
+wplayer/steam/api/SteamGames.class
+wplayer/json/ValidadeJSON.class
+wplayer/steam/api/SteamUser.class
+wplayer/steam/api/SteamOwnedGames.class
+wplayer/database/DBConnection.class
+wplayer/steam/api/AccountAPISteam.class
+wplayer/wperformance/LoginScreen.class
+wplayer/steam/api/RequestAPI.class
+wplayer/steam/api/PlayerFields.class
+wplayer/steam/api/ConverterUnixTime.class
+wplayer/steam/api/SteamPlayerAchievements.class
+wplayer/steam/api/SteamPlayer.class
+wplayer/wperformance/LoginScreen$1.class
+wplayer/steam/api/SteamPlayerRecentlyGames.class
