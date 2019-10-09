@@ -21,5 +21,10 @@
              <artifactId>json</artifactId>
              <version>20190722</version>
         </dependency>
+         <dependency>
+         <groupId>com.github.oshi</groupId>
+         <artifactId>oshi-core</artifactId>
+         <version>4.0.0</version>
+       </dependency>
     </dependencies>
 </project>
