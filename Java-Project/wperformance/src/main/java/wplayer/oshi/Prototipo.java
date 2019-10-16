@@ -103,8 +103,8 @@ public class Prototipo extends javax.swing.JFrame {
         lbram.setText(String.format("%10.1f %%", memo ));
         lbdisco.setText(String.format("%10.1f %%", discofinal ));
         jpcpu.setValue((int) load);
-        jpcpu1.setValue((int) memo);
-        jpcpu2.setValue((int) discofinal);
+        jpcpu2.setValue((int) memo);
+        jpcpu1.setValue((int) discofinal);
         OSProcess[] vetor = os.getProcesses(id, OperatingSystem.ProcessSort.CPU);
         ArrayList<String> listinha =   new ArrayList<String>();
         ArrayList<String> listinha2 = new ArrayList<String>();
