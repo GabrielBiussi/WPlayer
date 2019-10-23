@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>WPLAYER - STARTER PAGE</title>
+
+	<!-- Main Styles -->
+	<link rel="stylesheet" href="assets/styles/style.min.css">
+	
+	<!-- Themify Icon -->
+	<link rel="stylesheet" href="assets/fonts/themify-icons/themify-icons.css">
+
+	<!-- mCustomScrollbar -->
+	<link rel="stylesheet" href="assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css">
+
+	<!-- Waves Effect -->
+	<link rel="stylesheet" href="assets/plugin/waves/waves.min.css">
+
+	<!-- Sweet Alert -->
+	<link rel="stylesheet" href="assets/plugin/sweet-alert/sweetalert.css">
+
+	<!-- Data Tables -->
+	<link rel="stylesheet" href="assets/plugin/datatables/media/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="assets/plugin/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
+	
+</head>
+
+<body>
+<div class="main-menu">
+	<header class="header">
+		<a href="index.html" class="logo"><i class="ico ti-harddrive"></i>WPERFORANCE</a>
+		<button type="button" class="button-close fa fa-times js__menu_close"></button>
+	</header>
+	<!-- /.header -->
+	<div class="content">
+
+		<div class="navigation">
+			<ul class="menu js__accordion">
+				<li>
+					<a class="waves-effect" href="index.html"><i class="menu-icon ti-dashboard"></i><span>Home</span></a>
+				</li>
+				<li>
+					<a class="waves-effect" href="index.html"><i class="menu-icon ti-dashboard"></i><span>Histórico</span></a>
+				</li>
+				<li>
+					<a class="waves-effect" href="index.html"><i class="menu-icon ti-dashboard"></i><span>Perfil</span></a>
+				</li>
+				<li>
+					<a class="waves-effect" href="index.html"><i class="menu-icon ti-dashboard"></i><span>Suporte</span></a>
+				</li>
+			</ul>
+		</div>
+		<!-- /.navigation -->
+	</div>
+	<!-- /.content -->
+</div>
+<!-- /.main-menu -->
+
+<div class="fixed-navbar">
+	<div class="pull-left">
+		<button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+		<h1 class="page-title">Todas as máquinas</h1>
+		<!-- /.page-title -->
+	</div>
+	<!-- /.pull-left -->
+</div>
+<!-- /.fixed-navbar -->
+<div id="wrapper">
+	<div class="main-content">
+		<div class="row small-spacing">
+			<div class="col-xs-12">
+				<div class="box-content">
+					<h4 class="box-title">Histórico</h4>
+					<table id="example" class="table table-striped table-bordered display" style="width:100%">
+						<thead>
+							<tr>
+								<th>Nome da máquina</th>
+								<th>Tipo de dado</th>
+								<th>Porcentagem</th>
+								<th>Horário</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Nome da máquina</th>
+								<th>Tipo de dado</th>
+								<th>Porcentagem</th>
+								<th>Horário e data</th>
+							</tr>
+						</tfoot>
+						<tbody>
+								<tr>
+									<td>Máquina 1</td>
+									<td>CPU</td>
+									<td>90%</td>
+									<td>14:58:31 21/10/2019</td>
+								</tr>
+								<tr>
+									<td>Máquina 81</td>
+									<td>RAM</td>
+									<td>42%</td>
+									<td>14:22:14 42/1/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 29</td>
+									<td>RAM</td>
+									<td>24%</td>
+									<td>11:56:34 13/9/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 61</td>
+									<td>CPU</td>
+									<td>48%</td>
+									<td>6:6:39 32/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 51</td>
+									<td>CPU</td>
+									<td>13%</td>
+									<td>19:58:51 16/7/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 37</td>
+									<td>DISCO</td>
+									<td>34%</td>
+									<td>17:50:29 7/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 33</td>
+									<td>RAM</td>
+									<td>92%</td>
+									<td>20:21:8 38/9/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 27</td>
+									<td>RAM</td>
+									<td>45%</td>
+									<td>9:53:47 30/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 12</td>
+									<td>RAM</td>
+									<td>55%</td>
+									<td>20:44:17 60/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 39</td>
+									<td>RAM</td>
+									<td>72%</td>
+									<td>5:40:23 34/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 73</td>
+									<td>CPU</td>
+									<td>93%</td>
+									<td>3:59:9 17/7/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 91</td>
+									<td>CPU</td>
+									<td>73%</td>
+									<td>19:55:6 6/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 87</td>
+									<td>CPU</td>
+									<td>29%</td>
+									<td>18:47:51 15/1/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 66</td>
+									<td>RAM</td>
+									<td>11%</td>
+									<td>7:47:16 7/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 98</td>
+									<td>DISCO</td>
+									<td>79%</td>
+									<td>9:24:20 9/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 67</td>
+									<td>RAM</td>
+									<td>21%</td>
+									<td>14:34:37 54/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 51</td>
+									<td>CPU</td>
+									<td>93%</td>
+									<td>19:34:51 1/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 88</td>
+									<td>DISCO</td>
+									<td>44%</td>
+									<td>14:30:57 16/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 99</td>
+									<td>DISCO</td>
+									<td>55%</td>
+									<td>10:41:34 45/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 14</td>
+									<td>CPU</td>
+									<td>3%</td>
+									<td>3:25:10 23/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 19</td>
+									<td>CPU</td>
+									<td>6%</td>
+									<td>1:5:12 58/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 100</td>
+									<td>RAM</td>
+									<td>24%</td>
+									<td>18:25:24 40/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 65</td>
+									<td>DISCO</td>
+									<td>53%</td>
+									<td>6:1:8 40/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 77</td>
+									<td>DISCO</td>
+									<td>89%</td>
+									<td>7:26:18 16/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 47</td>
+									<td>RAM</td>
+									<td>24%</td>
+									<td>4:13:2 47/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 66</td>
+									<td>RAM</td>
+									<td>4%</td>
+									<td>6:16:21 18/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 6</td>
+									<td>RAM</td>
+									<td>89%</td>
+									<td>17:21:42 8/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 69</td>
+									<td>RAM</td>
+									<td>48%</td>
+									<td>15:58:44 52/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 47</td>
+									<td>DISCO</td>
+									<td>77%</td>
+									<td>21:55:21 19/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 86</td>
+									<td>DISCO</td>
+									<td>44%</td>
+									<td>11:4:14 36/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 58</td>
+									<td>CPU</td>
+									<td>29%</td>
+									<td>7:58:30 26/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 38</td>
+									<td>CPU</td>
+									<td>61%</td>
+									<td>3:30:10 32/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 87</td>
+									<td>CPU</td>
+									<td>91%</td>
+									<td>21:55:1 40/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 92</td>
+									<td>DISCO</td>
+									<td>7%</td>
+									<td>7:11:28 56/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 99</td>
+									<td>DISCO</td>
+									<td>13%</td>
+									<td>20:28:7 49/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 54</td>
+									<td>DISCO</td>
+									<td>71%</td>
+									<td>15:40:41 45/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 34</td>
+									<td>RAM</td>
+									<td>46%</td>
+									<td>22:40:11 43/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 21</td>
+									<td>RAM</td>
+									<td>81%</td>
+									<td>20:15:5 12/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 38</td>
+									<td>DISCO</td>
+									<td>60%</td>
+									<td>5:18:55 35/12/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 62</td>
+									<td>CPU</td>
+									<td>15%</td>
+									<td>10:8:27 51/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 13</td>
+									<td>RAM</td>
+									<td>62%</td>
+									<td>6:22:14 20/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 1</td>
+									<td>CPU</td>
+									<td>10%</td>
+									<td>19:29:43 23/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 94</td>
+									<td>RAM</td>
+									<td>73%</td>
+									<td>19:36:26 37/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 94</td>
+									<td>RAM</td>
+									<td>66%</td>
+									<td>17:31:10 20/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 9</td>
+									<td>RAM</td>
+									<td>90%</td>
+									<td>21:54:48 6/7/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 49</td>
+									<td>RAM</td>
+									<td>80%</td>
+									<td>19:41:21 20/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 97</td>
+									<td>RAM</td>
+									<td>5%</td>
+									<td>19:11:47 42/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 96</td>
+									<td>DISCO</td>
+									<td>2%</td>
+									<td>3:34:37 29/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 66</td>
+									<td>RAM</td>
+									<td>1%</td>
+									<td>8:22:17 40/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 34</td>
+									<td>RAM</td>
+									<td>55%</td>
+									<td>5:6:55 33/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 75</td>
+									<td>RAM</td>
+									<td>8%</td>
+									<td>22:6:27 5/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 1</td>
+									<td>RAM</td>
+									<td>19%</td>
+									<td>10:10:44 3/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 8</td>
+									<td>DISCO</td>
+									<td>40%</td>
+									<td>19:7:55 44/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 51</td>
+									<td>RAM</td>
+									<td>10%</td>
+									<td>12:33:32 8/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 38</td>
+									<td>DISCO</td>
+									<td>48%</td>
+									<td>11:20:27 13/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 41</td>
+									<td>CPU</td>
+									<td>77%</td>
+									<td>19:21:23 6/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 66</td>
+									<td>RAM</td>
+									<td>51%</td>
+									<td>20:21:40 3/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 1</td>
+									<td>RAM</td>
+									<td>88%</td>
+									<td>21:4:37 37/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 81</td>
+									<td>CPU</td>
+									<td>33%</td>
+									<td>12:40:6 50/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 23</td>
+									<td>RAM</td>
+									<td>53%</td>
+									<td>23:38:47 17/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 35</td>
+									<td>CPU</td>
+									<td>63%</td>
+									<td>7:5:56 19/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 6</td>
+									<td>CPU</td>
+									<td>2%</td>
+									<td>6:44:15 19/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 37</td>
+									<td>RAM</td>
+									<td>42%</td>
+									<td>10:54:38 33/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 50</td>
+									<td>CPU</td>
+									<td>17%</td>
+									<td>18:40:9 59/7/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 23</td>
+									<td>RAM</td>
+									<td>79%</td>
+									<td>1:18:7 22/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 78</td>
+									<td>RAM</td>
+									<td>71%</td>
+									<td>19:10:20 14/9/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 98</td>
+									<td>RAM</td>
+									<td>54%</td>
+									<td>14:17:26 56/1/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 44</td>
+									<td>RAM</td>
+									<td>62%</td>
+									<td>3:16:59 30/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 59</td>
+									<td>CPU</td>
+									<td>64%</td>
+									<td>5:31:10 37/5/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 65</td>
+									<td>RAM</td>
+									<td>67%</td>
+									<td>16:4:42 9/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 53</td>
+									<td>DISCO</td>
+									<td>38%</td>
+									<td>21:10:16 51/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 74</td>
+									<td>CPU</td>
+									<td>45%</td>
+									<td>12:41:6 22/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 40</td>
+									<td>RAM</td>
+									<td>89%</td>
+									<td>6:13:49 3/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 71</td>
+									<td>RAM</td>
+									<td>70%</td>
+									<td>8:49:30 53/4/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 38</td>
+									<td>RAM</td>
+									<td>51%</td>
+									<td>6:38:10 45/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 95</td>
+									<td>DISCO</td>
+									<td>96%</td>
+									<td>8:31:58 32/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 59</td>
+									<td>RAM</td>
+									<td>30%</td>
+									<td>15:26:60 24/9/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 4</td>
+									<td>RAM</td>
+									<td>92%</td>
+									<td>9:40:29 7/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 86</td>
+									<td>CPU</td>
+									<td>23%</td>
+									<td>10:47:54 11/1/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 4</td>
+									<td>CPU</td>
+									<td>24%</td>
+									<td>1:23:28 33/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 18</td>
+									<td>CPU</td>
+									<td>68%</td>
+									<td>19:42:20 48/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 13</td>
+									<td>RAM</td>
+									<td>31%</td>
+									<td>3:41:18 20/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 56</td>
+									<td>DISCO</td>
+									<td>97%</td>
+									<td>22:53:45 32/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 73</td>
+									<td>RAM</td>
+									<td>86%</td>
+									<td>11:5:23 58/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 26</td>
+									<td>RAM</td>
+									<td>89%</td>
+									<td>13:3:2 10/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 74</td>
+									<td>CPU</td>
+									<td>17%</td>
+									<td>1:16:19 20/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 26</td>
+									<td>RAM</td>
+									<td>91%</td>
+									<td>7:25:9 5/9/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 56</td>
+									<td>RAM</td>
+									<td>41%</td>
+									<td>12:13:59 11/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 1</td>
+									<td>RAM</td>
+									<td>88%</td>
+									<td>6:7:52 53/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 8</td>
+									<td>DISCO</td>
+									<td>54%</td>
+									<td>9:26:35 52/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 82</td>
+									<td>CPU</td>
+									<td>73%</td>
+									<td>1:4:2 2/12/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 37</td>
+									<td>CPU</td>
+									<td>19%</td>
+									<td>2:44:41 38/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 64</td>
+									<td>RAM</td>
+									<td>49%</td>
+									<td>10:28:34 13/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 2</td>
+									<td>DISCO</td>
+									<td>56%</td>
+									<td>11:34:16 58/3/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 73</td>
+									<td>RAM</td>
+									<td>88%</td>
+									<td>20:58:24 8/10/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 45</td>
+									<td>RAM</td>
+									<td>89%</td>
+									<td>16:24:2 40/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 92</td>
+									<td>DISCO</td>
+									<td>21%</td>
+									<td>10:27:16 60/11/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 3</td>
+									<td>RAM</td>
+									<td>9%</td>
+									<td>6:39:33 17/6/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 18</td>
+									<td>DISCO</td>
+									<td>32%</td>
+									<td>14:44:26 35/2/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 21</td>
+									<td>DISCO</td>
+									<td>79%</td>
+									<td>14:47:37 37/8/2019</td>
+								</tr> 
+								<tr>
+									<td>Máquina 34</td>
+									<td>RAM</td>
+									<td>78%</td>
+									<td>9:45:29 52/1/2019</td>
+								</tr>
+							</tbody>
+					</table>
+				</div>
+				<!-- /.box-content -->
+			</div>
+		</div>
+	</div>
+	<!-- /.main-content -->
+
+</div>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="assets/scripts/jquery.min.js"></script>
+	<script src="assets/scripts/modernizr.min.js"></script>
+	<script src="assets/plugin/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="assets/plugin/nprogress/nprogress.js"></script>
+	<script src="assets/plugin/sweet-alert/sweetalert.min.js"></script>
+	<script src="assets/plugin/waves/waves.min.js"></script>
+
+	<!-- Sparkline Chart -->
+	<script src="assets/plugin/chart/sparkline/jquery.sparkline.min.js"></script>
+	<script src="assets/scripts/chart.sparkline.init.min.js"></script>
+
+	<!-- Data Tables -->
+	<script src="assets/plugin/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="assets/plugin/datatables/media/js/dataTables.bootstrap.min.js"></script>
+	<script src="assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+	<script src="assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js"></script>
+	<script src="assets/scripts/datatables.demo.min.js"></script>
+
+	<script src="assets/scripts/main.min.js"></script>
+</body>
+</html>
