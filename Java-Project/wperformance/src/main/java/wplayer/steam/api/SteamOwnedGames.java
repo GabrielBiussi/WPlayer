@@ -5,16 +5,225 @@
  */
 package wplayer.steam.api;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import wplayer.database.DBConnection;
+import wplayer.json.ValidadeJSON;
+
 /**
  *
- * @author Sergio
+ * @author Gabriel, Petter, Giulianno
  */
 public class SteamOwnedGames {
-    private String steamId = "";
-    private static final String ENDPOINT = "";
-    //campo chave da tabela
-    private static final String FIELD = " http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+AccountAPISteam.key+"&format=json&steamid=";
-    private static final String TABLE = "";
+    private static final String ENDPOINT = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=3831A87503D7D84D68550EE188077B1D&include_appinfo=true&format=json&include_played_free_games=true&steamid=";
+    private static final String FIELD = "PLAYER_ID";
+    private static final String TABLE = "PLAYER_OWNED_GAMES";
+    private static final String INSERTSTATEMENT = String.format(
+                                                  "INSERT INTO %s "
+                                                + "VALUES "
+                                                + "(?,?,?,?,?,?)", TABLE);
+    private static final String UPDATESTATEMENT = String.format(
+                                                  "UPDATE %s SET "
+                                                + "PLAYER_ID = ?, GAME_ID = ?,"
+                                                + "GAME_COMMUNITY_PERMISSION = ?,"
+                                                + "PLAYTIME_FULL = ?,"
+                                                + "PLAYTIME_2WEEKS = ?, "
+                                                + "PLAYER_GAME_PERCENTAGE = ? "
+                                                + "WHERE PLAYER_ID = ? "
+                                                  + "AND GAME_ID = ?", TABLE);
+    private static final String SELECTQUERY = String.format("SELECT "
+                                                             + "GAME_ID "
+                                                            + "FROM %s "
+                                                           + "WHERE PLAYER_ID = ?", TABLE);
     
+    public static void updateOwnedGames(String steamid){
+        ArrayList<GameFields> games = hasRowsInTable(steamid, getGamesArray(steamid));
+        
+        if(games != null){
+        
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statementInsert = null;
+        PreparedStatement statementUpdate = null;
+        
+        try{
+           statementInsert = connection.prepareStatement(INSERTSTATEMENT);
+           statementUpdate = connection.prepareStatement(UPDATESTATEMENT);
+
+            for (GameFields game : games) {
+                if(!game.isInsert){
+                        statementUpdate.setString(1, game.getPlayerId());
+                        statementUpdate.setString(2, game.getGameId());
+                        statementUpdate.setInt(3, game.getGameCommunityPermission());
+                        statementUpdate.setDouble(4, game.getPlayTimeFull());
+                        statementUpdate.setDouble(5, game.getPlayTime2Weeks());
+                        statementUpdate.setDouble(6, game.getGamePercentage());
+                        statementUpdate.setString(7, game.getPlayerId());
+                        statementUpdate.setString(8, game.getGameId());
+                        
+
+                        statementUpdate.addBatch();
+                }
+                else{
+                        statementInsert.setString(1, game.getPlayerId());
+                        statementInsert.setString(2, game.getGameId());
+                        statementInsert.setInt(3, game.getGameCommunityPermission());
+                        statementInsert.setDouble(4, game.getPlayTimeFull());
+                        statementInsert.setDouble(5, game.getPlayTime2Weeks());
+                        statementInsert.setDouble(6, game.getGamePercentage());
+
+                        statementInsert.addBatch();
+                 }        
+            }
+            
+            statementInsert.executeBatch();
+            statementUpdate.executeBatch();
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro nos Inserts/Updates: "+ex);
+            System.err.println("Erro nos Inserts/Updates: "+ex);
+        } finally{
+            try {
+                statementInsert.close();
+            } catch (SQLException ex) {
+                System.err.println("Erro ao fechar Statement: "+ex);
+            }
+            DBConnection.closeConnection(connection, statementUpdate);
+        }
+    }
+}
     
+    private static ArrayList<GameFields> hasRowsInTable(String playerId, ArrayList<GameFields> gamesList){
+        if(gamesList == null)
+            return null;
+        
+        ArrayList<GameFields> games = gamesList;
+        ArrayList<String> containGames = new ArrayList<String>();
+        Connection connection = null;
+        PreparedStatement prepareStatement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = DBConnection.getConnection();
+            prepareStatement = connection.prepareStatement(SELECTQUERY);
+            
+            prepareStatement.setString(1, playerId);
+            
+            prepareStatement.addBatch();
+            
+            resultSet = prepareStatement.executeQuery();
+            
+            while(resultSet.next())
+                containGames.add(resultSet.getString("GAME_ID"));
+            
+            for (GameFields game : games)
+                game.setInsert(!containGames.contains(game.getGameId()));
+                
+            return games;
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro na conexão com banco de dados: "+ex);
+        } finally{
+            DBConnection.closeConnection(connection, prepareStatement, resultSet);
+        }
+        
+        return null;
+    }
+    
+    private static ArrayList<GameFields> getGamesArray(String steamid){ 
+        ArrayList<GameFields> gamesArray = new ArrayList<GameFields>();
+        JSONObject pageFull = getPageFull(steamid);
+        JSONArray games = ValidadeJSON.getJSONArray(ValidadeJSON.getJSONObject(pageFull, "response"), "games");
+        
+        if(games == null)
+            return null;
+        
+        
+        for (Object g : games){
+           JSONObject game = (JSONObject) g;
+           gamesArray.add(new GameFields(steamid,
+                                         ValidadeJSON.getJSONInt(game, "appid").toString(),
+                                         getCommunityVisible(ValidadeJSON.getJSONBoolean(game, "has_community_visible_stats")),
+                                         getTimeInHours(ValidadeJSON.getJSONInt(game, "playtime_forever")),
+                                         getTimeInHours(ValidadeJSON.getJSONInt(game, "playtime_2weeks")),
+                                         getGamePercentage(steamid, ValidadeJSON.getJSONInt(game, "appid").toString())));
+        }
+        
+        return gamesArray;
+    }
+    
+    private static JSONObject getPageFull(String steamid){
+        try {
+            JSONObject pageFull = RequestAPI.getJSON(ENDPOINT+steamid);
+            System.out.println(ENDPOINT+steamid);
+            return pageFull;
+        } catch (IOException ex) {
+            System.err.println("Erro na aquisição da API (SteamOwnedGames): "+ex);
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException ex1) {
+                System.err.println("Se não der, não deu");
+            }
+        }
+        return null;
+    }
+   
+    private static Double getTimeInHours(Integer time){
+        return time != null?  Double.valueOf(time)/60 : 0;
+    }
+    
+    private static Integer getCommunityVisible(Boolean isVisible){
+        return isVisible != null? isVisible? 1 : 0 : 0;
+    }
+    
+    private static Double getGamePercentage(String steamId, String appId) {
+        Double percentage = 0.0;
+
+        JSONObject pageFull = getPagePercent(steamId, appId);
+        JSONObject playerStats = ValidadeJSON.getJSONObject(pageFull, "playerstats");
+        JSONArray achievements = ValidadeJSON.getJSONArray(playerStats, "achievements");
+        Integer totalDone = 0;
+        
+        if(achievements != null){
+            
+            Integer total = achievements.length();
+            
+            for(Object a : achievements){
+                JSONObject achievement = (JSONObject) a;
+                
+                Integer done = ValidadeJSON.getJSONInt(achievement, "achieved");
+                
+                if(done == 1)
+                    totalDone++;
+            }
+            
+            
+            percentage = Double.valueOf(totalDone)/total * 100;
+            
+            return percentage;
+            
+        }
+        else
+            return percentage;
+    }
+    
+    private static JSONObject getPagePercent(String steamId, String appId){
+        String url = "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?format=json&appid="+appId+"&key="+AccountAPISteam.key+"&steamid="+steamId;
+
+        try {
+            JSONObject pageFull = RequestAPI.getJSON(url);
+            
+            return pageFull;
+            
+        } catch (IOException ex) {
+            System.err.println("Erro: "+ex);
+        }
+        
+        return null;
+    }
 }

@@ -19,7 +19,11 @@ private static final String ENDPOINTFRIENDS = "http://api.steampowered.com/IStea
 private static final String FIELD = "PLAYER_ID";
 private static final String TABLE = "PLAYER";
 private static final String INSERTSQL = String.format(
-                                               "INSERT INTO %s VALUES (?,?,?,?,?,?,?,?,?,?)",
+                                               "INSERT INTO %s "
+                                             + "(PLAYER_ID, PLAYER_NICKNAME, PLAYER_PROFILE_URL, PLAYER_AVATAR, "
+                                             + "PLAYER_PERSONA_STATE, PLAYER_VISIBILITY_PERMISSION, PLAYER_LAST_LOGOFF, "
+                                             + "PLAYER_NAME, PLAYER_CREATION_DATA, PLAYER_CURRENT_GAME_ID) "
+                                             + "VALUES (?,?,?,?,?,?,?,?,?,?)",
                                                 TABLE);
 private static final String UPDATESQL = String.format(
                                                 "UPDATE %s SET PLAYER_NICKNAME = ?,"

@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
@@ -22,14 +24,32 @@ import wplayer.json.ValidadeJSON;
 public class SteamGames {
     private static final String ENDPOINTAPPS = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
     private static final String ENDPOINTDETAILS = "https://store.steampowered.com/api/appdetails/?appids=";
+    private static final String ENDPOINTACHIEVEMENTS = "http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?format=json&gameid=";
     private static final String FIELD = "APP_ID";
     private static final String TABLE = "APPS";
     private static final String INSERTSTATEMENT = String.format(
-                         "INSERT INTO %s VALUES (?,?,?,?,?,?,?,?,?,?)", TABLE);
+                         "INSERT INTO %s (APP_ID, APP_NAME, APP_TYPE, APP_REQUIRED_AGE,"
+                                      + " APP_MAIN_GAME, APP_GENRES, APP_IS_FREE,"
+                                      + " APP_IS_MULTIPLAYER, APP_IS_SINGLEPLAYER, "
+                                      + " APP_PRICE, APP_FORMATED_PRICE, APP_SHORT_DESCRIPTION, "
+                                      + " APP_HEADER_IMAGE, APP_REQUIREMENTS_MINIMUM,"
+                                      + " APP_REQUIREMENTS_RECOMMENDED, APP_PLATFORMS, "
+                                      + " APP_BACKGROUND_IMAGE, GLOBAL_GAME_PERCENTAGE, TOTAL_RECOMMENDATIONS)"
+                                      + " VALUES "
+                                      + "(?, ?, ?, ?, ?, ?, ?, ?, ?,"
+                                      + " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE);
     private static final String UPDATESTATEMENT = String.format(
-                         "UPDATE %s SET APP_NAME=?,APP_TYPE=?,APP_REQUIRED_AGE=?,APP_MAIN_GAME=?,"
-                       + "APP_GENRES=?,APP_IS_FREE=?,APP_IS_MULTIPLAYER=?,APP_IS_SINGLEPLAYER=?,"
-                       + "APP_PRICE=? WHERE APP_ID=?", TABLE);
+                         "UPDATE %s SET "
+                                      + " APP_NAME=?, APP_TYPE=?, APP_REQUIRED_AGE=?, "
+                                      + " APP_MAIN_GAME=?, APP_GENRES=?, APP_IS_FREE=?, "
+                                      + " APP_IS_MULTIPLAYER=?, APP_IS_SINGLEPLAYER=?, "
+                                      + " APP_PRICE=?, APP_FORMATED_PRICE=?, "
+                                      + " APP_SHORT_DESCRIPTION=?, APP_HEADER_IMAGE=?, "
+                                      + " APP_REQUIREMENTS_MINIMUM=?, "
+                                      + " APP_REQUIREMENTS_RECOMMENDED=?, APP_PLATFORMS=?, "
+                                      + " APP_BACKGROUND_IMAGE=?, GLOBAL_GAME_PERCENTAGE=?, "
+                                      + " TOTAL_RECOMMENDATIONS=? "
+                                      + " WHERE %s=?", TABLE, FIELD);
  
     public static void updateAppsTable(){
         Map<String, Boolean> dictionaryApps = getAppsDictionary();
@@ -37,7 +57,7 @@ public class SteamGames {
         
         dictionaryApps.keySet().forEach((appID) -> {
             if(dictionaryApps.get(appID))
-                System.out.println("f");//  updateAppDetails(appID, false);
+                updateAppDetails(appID, false);
             else
                 if(!ignored.contains(appID))
                     updateAppDetails(appID, true);
@@ -53,28 +73,42 @@ public class SteamGames {
             JSONObject refinedDetails = fullDetails.getJSONObject(id);
             
             if(ValidadeJSON.getJSONBoolean(refinedDetails, "success")){
-                
-                
+               
                 JSONObject data = ValidadeJSON.getJSONObject(refinedDetails, "data");
                 JSONObject fullGame = ValidadeJSON.getJSONObject(data, "fullgame");
                 JSONObject priceOverview = ValidadeJSON.getJSONObject(data, "price_overview");
+                JSONObject pcRequirements = ValidadeJSON.getJSONObject(data, "pc_requirements");
+                JSONObject platforms = ValidadeJSON.getJSONObject(data, "platforms");
+                JSONObject recommendations = ValidadeJSON.getJSONObject(data, "recommendations");
                         
                 JSONArray fullCategories = ValidadeJSON.getJSONArray(data, "categories");
                 JSONArray fullGenres = ValidadeJSON.getJSONArray(data, "genres");
+                
+                Boolean hasSupportWindows = ValidadeJSON.getJSONBoolean(platforms, "windows");
+                Boolean hasSupportMac = ValidadeJSON.getJSONBoolean(platforms, "mac");
+                Boolean hasSupportLinux = ValidadeJSON.getJSONBoolean(platforms, "linux");
                 
                 String appId = id;
                 String nameApp = ValidadeJSON.getJSONString(data, "name");
                 String type = ValidadeJSON.getJSONString(data, "type");
                 String fullGameID = ValidadeJSON.getJSONString(fullGame, "appid");
                 String genres = getConcateGenres(fullGenres);
+                String shortDescription = ValidadeJSON.getJSONString(data, "short_description");
+                String headerImage = ValidadeJSON.getJSONString(data, "header_image");
+                String requirementsMinimum = ValidadeJSON.getJSONString(pcRequirements, "minimum");
+                String requirementsRecommended = ValidadeJSON.getJSONString(pcRequirements, "recommended");
+                String backgroundImage = ValidadeJSON.getJSONString(data, "background");
+                String formatedPrice = ValidadeJSON.getJSONString(priceOverview, "final_formatted");
+                String platformsInclude = getPlatformsInclude(hasSupportWindows, hasSupportMac, hasSupportLinux);
                 
                 Integer requiredAge = ValidadeJSON.getJSONInt(data, "required_age");
                 Integer isFree = ValidadeJSON.getJSONBoolean(data, "is_free")? 1 : 0;
                 Integer isMultiplayer = isMultiplayer(fullCategories)? 1 : 0;
                 Integer isSinglePlayer = isSinglePlayer(fullCategories)? 1 : 0;
+                Integer totalRecommendation = getTotalRecommendation(recommendations);
                 
                 Double price = getPriceApp(ValidadeJSON.getJSONInt(priceOverview, "final"));
-                
+                Double globalPercentage = type.equals("game")? getPercentage(getPercentagesList(appId)) : 0.0;
                 connection = DBConnection.getConnection();
                 
                 if(isInsert){
@@ -90,6 +124,15 @@ public class SteamGames {
                     statement.setInt(8, isMultiplayer);
                     statement.setInt(9, isSinglePlayer);
                     statement.setDouble(10, price);
+                    statement.setString(11, formatedPrice);
+                    statement.setString(12, shortDescription);
+                    statement.setString(13, headerImage);
+                    statement.setString(14, requirementsMinimum);
+                    statement.setString(15, requirementsRecommended);
+                    statement.setString(16, platformsInclude);
+                    statement.setString(17, backgroundImage);
+                    statement.setDouble(18, globalPercentage);
+                    statement.setInt(19, totalRecommendation);
                     
                     statement.addBatch();
                     
@@ -115,7 +158,17 @@ public class SteamGames {
                     statement.setInt(7, isMultiplayer);
                     statement.setInt(8, isSinglePlayer);
                     statement.setDouble(9, price);
-                    statement.setString(10, appId);
+                    statement.setString(10, formatedPrice);
+                    statement.setString(11, shortDescription);
+                    statement.setString(12, headerImage);
+                    statement.setString(13, requirementsMinimum);
+                    statement.setString(14, requirementsRecommended);
+                    statement.setString(15, platformsInclude);
+                    statement.setString(16, backgroundImage);
+                    statement.setDouble(17, globalPercentage);
+                    statement.setInt(18, totalRecommendation);
+                    statement.setString(19, appId);
+                    
                     
                     statement.addBatch();
                     
@@ -269,5 +322,79 @@ public class SteamGames {
         
         return null;
     }
+
+    private static String getPlatformsInclude(Boolean hasSupportWindows, Boolean hasSupportMac, Boolean hasSupportLinux) {
+        Boolean windows = hasSupportWindows != null? hasSupportLinux : false;
+        Boolean mac = hasSupportMac != null? hasSupportLinux : false;
+        Boolean linux = hasSupportLinux != null? hasSupportLinux : false;
+        String platforms = "";
+        
+        if(!windows && !mac && !linux)
+            return null;
+        
+        if(windows)
+            platforms += "windows ";
+        if(mac)
+            platforms += "mac ";
+        if(linux)
+            platforms += "linux";
+        
+        return platforms;
+    }
+
+    private static Integer getTotalRecommendation(JSONObject recommendations) {
+        return ValidadeJSON.getJSONInt(recommendations, "total") == null?
+                0 : ValidadeJSON.getJSONInt(recommendations, "total");
+    }
+    
+    private static ArrayList<Double> getPercentagesList(String gameId){
+        ArrayList<Double> percentagesList = new ArrayList<Double>();
+        
+        try {
+            JSONObject fullPage = RequestAPI.getJSON(ENDPOINTACHIEVEMENTS+gameId);
+            JSONObject achievementsList = ValidadeJSON.getJSONObject(fullPage, "achievementpercentages");
+            
+            JSONArray achievements = ValidadeJSON.getJSONArray(achievementsList, "achievements");
+            
+            // System.out.println(achievements);
+            
+            achievements.forEach(a -> {
+                JSONObject achievement = (JSONObject) a;
+                percentagesList.add(ValidadeJSON.getJSONDouble(achievement, "percent"));
+            });
+            
+            return percentagesList;
+            
+        } catch (IOException ex) {
+            System.err.println("Erro: "+ex);
+            try {
+                System.err.println("Uma pausa pra comer");
+                Thread.sleep(120000);
+            } catch (InterruptedException ex1) {
+
+            }
+        }
+        
+        return null;
+    }
+    
+    private static Double getPercentage(ArrayList<Double> listPercentage){ 
+        Double media = 0.0;
+        Double total = 0.0;
+        
+        if(listPercentage != null){
+            
+            Integer amount = listPercentage.toArray().length;
+
+            for (Double percentage : listPercentage)
+                total += percentage;
+
+            media = (total / amount);
+            
+        }
+        //System.out.println(media);
+        return Double.isNaN(media)? 0: media; 
+    }
+
     
 }

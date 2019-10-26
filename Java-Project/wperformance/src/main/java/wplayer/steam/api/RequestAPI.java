@@ -22,7 +22,7 @@ public class RequestAPI {
         URL http = new URL(url);
         
         // Criação da variável InputStreamReader, abrindo conexão com a API)
-        InputStreamReader request = new InputStreamReader(http.openStream());
+        InputStreamReader request = new InputStreamReader(http.openStream(), "UTF-8");
         
         // Criação da variável do tipo BufferedReader, para fazer a leitura dos dados recebidos
         BufferedReader requestData = new BufferedReader(request);

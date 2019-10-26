@@ -97,4 +97,22 @@ public class ValidadeJSON {
                 return null;
             }
         }
+        
+        public static Double getJSONDouble(JSONObject JSON, String field){
+            try{
+                return JSON.getDouble(field);
+            }
+            catch(RuntimeException ex){
+                return null;
+            }
+        }
+
+        public static Double getJSONDouble(JSONArray JSON, Integer index){
+            try{
+                return JSON.getDouble(index);
+            }
+            catch(RuntimeException ex){
+                return null;
+            }
+        }
 }

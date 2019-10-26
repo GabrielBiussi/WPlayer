@@ -1,6 +1,7 @@
 package wplayer.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,6 +14,42 @@ import java.util.Map;
  * @author petter
  */
 public class DBQuery {
+    
+    public static ArrayList<String> getGamesIds(){
+        ArrayList<String> gamesIds = new ArrayList<String>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        final String TABLE = "APPS";
+        final String FIELD = "APP_ID";
+        final String TYPE = "game";
+        
+        String query = String.format(
+                       "SELECT "
+                          + "%s "
+                       + "FROM %s "
+                      + "WHERE APP_TYPE = '%s'", FIELD, TABLE, TYPE);
+        
+        try{
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            while(resultSet.next())
+                gamesIds.add(resultSet.getString(FIELD));
+            
+            return gamesIds;
+  
+        }catch(SQLException ex){
+            System.err.println("Erro SQL: "+ex);
+        }finally{
+            DBConnection.closeConnection(connection, preparedStatement, resultSet);
+        }
+        
+        return gamesIds;
+    }
+    
     public static Boolean hasRowInTable(String row, String field, String table){
         Connection connection = null;
         Statement statement = null;
