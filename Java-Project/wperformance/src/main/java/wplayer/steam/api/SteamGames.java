@@ -57,7 +57,7 @@ public class SteamGames {
         
         dictionaryApps.keySet().forEach((appID) -> {
             if(dictionaryApps.get(appID))
-                updateAppDetails(appID, false);
+                System.out.println("Ignorado mermão, to nem aí. Bagulho é doido");// updateAppDetails(appID, false);
             else
                 if(!ignored.contains(appID))
                     updateAppDetails(appID, true);
