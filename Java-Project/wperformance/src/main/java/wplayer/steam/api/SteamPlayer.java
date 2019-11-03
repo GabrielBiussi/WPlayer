@@ -226,6 +226,6 @@ private static ArrayList<String> getPlayerFriends(String steamId){
         }
    
    private static String getVisibilityPermission(Integer visibilityPermission){
-       return visibilityPermission == 3? "Público" : "Privado";
+       return visibilityPermission == 3? "PUBLIC" : "PRIVATE";
    }
 }

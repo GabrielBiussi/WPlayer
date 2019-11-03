@@ -23,18 +23,18 @@ import wplayer.json.ValidadeJSON;
 public class SteamOwnedGames {
     private static final String ENDPOINT = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=3831A87503D7D84D68550EE188077B1D&include_appinfo=true&format=json&include_played_free_games=true&steamid=";
     private static final String FIELD = "PLAYER_ID";
-    private static final String TABLE = "PLAYER_OWNED_GAMES";
+    private static final String TABLE = "OWNED_APPS";
     private static final String INSERTSTATEMENT = String.format(
                                                   "INSERT INTO %s "
-                                                + "VALUES "
-                                                + "(?,?,?,?,?,?)", TABLE);
+                                                + "(PLAYER_ID, GAME_ID, GAME_COMMUNITY_PERMISSION, "
+                                                + "PLAYTIME_FULL, PLAYTIME_2WEEKS) "
+                                                + "VALUES (?, ?, ?, ?, ?)", TABLE);
     private static final String UPDATESTATEMENT = String.format(
                                                   "UPDATE %s SET "
                                                 + "PLAYER_ID = ?, GAME_ID = ?,"
                                                 + "GAME_COMMUNITY_PERMISSION = ?,"
                                                 + "PLAYTIME_FULL = ?,"
-                                                + "PLAYTIME_2WEEKS = ?, "
-                                                + "PLAYER_GAME_PERCENTAGE = ? "
+                                                + "PLAYTIME_2WEEKS = ? "
                                                 + "WHERE PLAYER_ID = ? "
                                                   + "AND GAME_ID = ?", TABLE);
     private static final String SELECTQUERY = String.format("SELECT "
@@ -62,9 +62,8 @@ public class SteamOwnedGames {
                         statementUpdate.setInt(3, game.getGameCommunityPermission());
                         statementUpdate.setDouble(4, game.getPlayTimeFull());
                         statementUpdate.setDouble(5, game.getPlayTime2Weeks());
-                        statementUpdate.setDouble(6, game.getGamePercentage());
-                        statementUpdate.setString(7, game.getPlayerId());
-                        statementUpdate.setString(8, game.getGameId());
+                        statementUpdate.setString(6, game.getPlayerId());
+                        statementUpdate.setString(7, game.getGameId());
                         
 
                         statementUpdate.addBatch();
@@ -75,7 +74,6 @@ public class SteamOwnedGames {
                         statementInsert.setInt(3, game.getGameCommunityPermission());
                         statementInsert.setDouble(4, game.getPlayTimeFull());
                         statementInsert.setDouble(5, game.getPlayTime2Weeks());
-                        statementInsert.setDouble(6, game.getGamePercentage());
 
                         statementInsert.addBatch();
                  }        
@@ -150,8 +148,7 @@ public class SteamOwnedGames {
                                          ValidadeJSON.getJSONInt(game, "appid").toString(),
                                          getCommunityVisible(ValidadeJSON.getJSONBoolean(game, "has_community_visible_stats")),
                                          getTimeInHours(ValidadeJSON.getJSONInt(game, "playtime_forever")),
-                                         getTimeInHours(ValidadeJSON.getJSONInt(game, "playtime_2weeks")),
-                                         getGamePercentage(steamid, ValidadeJSON.getJSONInt(game, "appid").toString())));
+                                         getTimeInHours(ValidadeJSON.getJSONInt(game, "playtime_2weeks"))));
         }
         
         return gamesArray;
@@ -181,49 +178,4 @@ public class SteamOwnedGames {
         return isVisible != null? isVisible? 1 : 0 : 0;
     }
     
-    private static Double getGamePercentage(String steamId, String appId) {
-        Double percentage = 0.0;
-
-        JSONObject pageFull = getPagePercent(steamId, appId);
-        JSONObject playerStats = ValidadeJSON.getJSONObject(pageFull, "playerstats");
-        JSONArray achievements = ValidadeJSON.getJSONArray(playerStats, "achievements");
-        Integer totalDone = 0;
-        
-        if(achievements != null){
-            
-            Integer total = achievements.length();
-            
-            for(Object a : achievements){
-                JSONObject achievement = (JSONObject) a;
-                
-                Integer done = ValidadeJSON.getJSONInt(achievement, "achieved");
-                
-                if(done == 1)
-                    totalDone++;
-            }
-            
-            
-            percentage = Double.valueOf(totalDone)/total * 100;
-            
-            return percentage;
-            
-        }
-        else
-            return percentage;
-    }
-    
-    private static JSONObject getPagePercent(String steamId, String appId){
-        String url = "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?format=json&appid="+appId+"&key="+AccountAPISteam.key+"&steamid="+steamId;
-
-        try {
-            JSONObject pageFull = RequestAPI.getJSON(url);
-            
-            return pageFull;
-            
-        } catch (IOException ex) {
-            System.err.println("Erro: "+ex);
-        }
-        
-        return null;
-    }
 }

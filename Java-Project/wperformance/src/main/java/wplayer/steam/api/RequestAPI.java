@@ -8,6 +8,7 @@ package wplayer.steam.api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.json.JSONObject;
@@ -21,8 +22,17 @@ public class RequestAPI {
         // Criação da variável do tipo URL  
         URL http = new URL(url);
         
-        // Criação da variável InputStreamReader, abrindo conexão com a API)
-        InputStreamReader request = new InputStreamReader(http.openStream(), "UTF-8");
+        HttpURLConnection conn = (HttpURLConnection) http.openConnection();
+        
+        if(conn.getResponseCode() == 429)
+            try {
+                System.out.println("Pausa para comer");
+                Thread.sleep(120000);
+        } catch (InterruptedException ex) {
+                System.err.println("dale");
+        }
+        // Criação da variável InputStreamReader, abrindo conexão com a API) http.openStream()
+        InputStreamReader request = new InputStreamReader(conn.getInputStream(), "UTF-8");
         
         // Criação da variável do tipo BufferedReader, para fazer a leitura dos dados recebidos
         BufferedReader requestData = new BufferedReader(request);

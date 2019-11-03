@@ -15,16 +15,14 @@ public class GameFields {
     Integer gameCommunityPermission;
     Double playTimeFull;
     Double playTime2Weeks;
-    Double gamePercentage;
     Boolean isInsert;
 
-    public GameFields(String playerId, String gameId, Integer gameCommunityPermission, Double playTimeFull, Double playTime2Weeks, Double gamePercentage) {
+    public GameFields(String playerId, String gameId, Integer gameCommunityPermission, Double playTimeFull, Double playTime2Weeks) {
         this.playerId = playerId;
         this.gameId = gameId;
         this.gameCommunityPermission = gameCommunityPermission;
         this.playTimeFull = playTimeFull;
         this.playTime2Weeks = playTime2Weeks;
-        this.gamePercentage = gamePercentage;
     }
 
     public Boolean isInsert(){
@@ -53,9 +51,5 @@ public class GameFields {
 
     public Double getPlayTime2Weeks() {
         return this.playTime2Weeks;
-    }
-    
-    public Double getGamePercentage(){
-        return this.gamePercentage;
     }
 }

@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
@@ -56,9 +54,9 @@ public class SteamGames {
         ArrayList<String> ignored = getListIgnoredApps();
         
         dictionaryApps.keySet().forEach((appID) -> {
-            if(dictionaryApps.get(appID))
-                System.out.println("Ignorado mermão, to nem aí. Bagulho é doido");// updateAppDetails(appID, false);
-            else
+            if(dictionaryApps.get(appID)){
+               // System.out.println("Ignorado mermão, to nem aí. Bagulho é doido");// updateAppDetails(appID, false);
+            }else
                 if(!ignored.contains(appID))
                     updateAppDetails(appID, true);
         });
@@ -139,12 +137,8 @@ public class SteamGames {
                     statement.executeBatch();
                     
                     System.out.println(nameApp + ": Inserido");
+                    //sleep(1000);
                     
-                    try {
-                sleep(1000);
-            } catch (InterruptedException ex1) {
-                System.err.println("Sleep error: "+ex1);
-            }
                 }
                 else{
                     statement = connection.prepareStatement(UPDATESTATEMENT);
@@ -176,12 +170,8 @@ public class SteamGames {
                     
                     
                     System.out.println(nameApp + ": Atualizado");
+                    // sleep(1000);
                     
-                    try {
-                sleep(1000);
-            } catch (InterruptedException ex1) {
-                System.err.println("Sleep error: "+ex1);
-            }
                 }
                 
             }
@@ -194,23 +184,12 @@ public class SteamGames {
                 statement.setString(1, id);
                 
                 statement.execute();
+                // sleep(1000);
                 
-                try {
-                sleep(1000);
-            } catch (InterruptedException ex1) {
-                System.err.println("Sleep error: "+ex1);
-            }
-                //System.err.println("Erro na API p/ Aquisição"
-                       //          + " de campos do appId: "+id);
             }
            
         } catch (IOException ex) {
             System.err.println("Erro (SteamGames.getFieldsDetails): " +ex);
-            try {
-                sleep(120000);
-            } catch (InterruptedException ex1) {
-                System.err.println("Sleep error: "+ex1);
-            }
         } catch (SQLException ex) {
             System.err.println("Erro com INSERT/UPDATE ("+id+") (SteamGames.getFieldsDetails): "+ex);
         } finally{
@@ -367,12 +346,6 @@ public class SteamGames {
             
         } catch (IOException ex) {
             System.err.println("Erro: "+ex);
-            try {
-                System.err.println("Uma pausa pra comer");
-                Thread.sleep(120000);
-            } catch (InterruptedException ex1) {
-
-            }
         }
         
         return null;
