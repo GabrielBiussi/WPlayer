@@ -51,6 +51,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                getdata();
                 insertdb(load, ram, discofinal);
             }
 
