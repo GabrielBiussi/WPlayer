@@ -11,14 +11,14 @@ import java.sql.Statement;
  * @author petter
  */
 public class DBConnection {
-    private static final String HOSTNAME = "wplayer.database.windows.net";
-    // private static final String HOSTNAME = "servidor01191045.database.windows.net";
-    private static final String DBNAME = "bdWPlayer";
-    // private static final String DBNAME = "RaiseAdventurer";
-    private static final String USER = "wplayer";
-    // private static final String USER = "GF01191045";
-    private static final String PASSWORD = "#Gfgrupo9";
-    // private static final String PASSWORD = "#Gf46768871838";ss
+    //private static final String HOSTNAME = "wplayer.database.windows.net";
+    private static final String HOSTNAME = "servidor01191045.database.windows.net";
+    //private static final String DBNAME = "bdWPlayer";
+    private static final String DBNAME = "RaiseAdventurer";
+    //private static final String USER = "wplayer";
+    private static final String USER = "GF01191045";
+    //private static final String PASSWORD = "#Gfgrupo9";
+    private static final String PASSWORD = "#Gf46768871838";
     private static final String URL = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;"
             + "hostNameInCertificate=*.database.windows.net;loginTimeout=30;", HOSTNAME, DBNAME, USER, PASSWORD);
     
