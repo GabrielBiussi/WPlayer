@@ -5,16 +5,10 @@
  */
 package wplayer.wperformance;
 
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 import oshi.SystemInfo;
 import oshi.software.os.OSFileStore;
-import java.awt.Font;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,7 +18,8 @@ import wplayer.database.DBConnection;
  *
  * @author Gabriel
  */
-public class MachineMonitoringScreen extends javax.swing.JFrame {  
+public class MachineMonitoringScreen extends javax.swing.JFrame {      
+    private String machineKey;
     
     SystemInfo oshi = new SystemInfo();
     //método pra captar ticks do processador (deve ser global caso voce faça local ele não funciona)
@@ -32,6 +27,10 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     double load ;
     double ram;
     double discofinal;
+
+    public void setMachineKey(String machineKey) {
+        this.machineKey = machineKey;
+    }
 
     private void counter() {
         TimerTask task = new TimerTask() {
@@ -64,12 +63,6 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         long period = 60000L;
         timer.scheduleAtFixedRate(task, delay, period);
     }
-    
-    
-    
-    
-    
-    
 
     private void getdata() {
         //captando dados por meio da instancia OSHI
@@ -93,7 +86,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         
         //calculos do processador
         
-         load = oshi.getHardware().getProcessor().getSystemCpuLoadBetweenTicks(ticks);
+        load = oshi.getHardware().getProcessor().getSystemCpuLoadBetweenTicks(ticks);
         ticks = oshi.getHardware().getProcessor().getSystemCpuLoadTicks();
         
         
@@ -124,7 +117,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     }
     
     private void updatenumbers(double load,double ram,double discofinal){
-         load = load *100;
+        load = load *100;
         ram = ram * 100;
         discofinal = discofinal * 100;
         
@@ -139,7 +132,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     }
     
     private void insertdb(double load,double ram,double discofinal){
-        insertData(load, ram, discofinal, null, "bdsaygfa22143");
+        insertData(load, ram, discofinal, null, machineKey);
     }
     
      public static void insertData(Double cpuA, Double ramA, Double discA, Double gpuA, String machineKey) {
