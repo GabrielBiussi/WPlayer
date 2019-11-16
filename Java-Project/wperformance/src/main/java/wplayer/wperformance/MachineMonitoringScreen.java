@@ -51,14 +51,17 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                getdata();
+                
                 insertdb(load, ram, discofinal);
+                System.out.println(load + "\n");
+                System.out.println(ram + "\n");
+                System.out.println(discofinal + "\n");
             }
 
         };
         Timer timer = new Timer();
-        long delay = 1000L;
-        long period = 1000L;
+        long delay = 60000L;
+        long period = 60000L;
         timer.scheduleAtFixedRate(task, delay, period);
     }
     
@@ -180,7 +183,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         
         initComponents();
         counter();
-        
+        counterdb();
         
         //jPanel2 =  
     }
