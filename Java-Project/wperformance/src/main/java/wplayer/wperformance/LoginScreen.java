@@ -18,7 +18,12 @@ public class LoginScreen extends javax.swing.JFrame {
      * Creates new form LoginScreen
      */
     public LoginScreen() {
+      
         initComponents();
+          this.setResizable(true);
+          this.setLocationRelativeTo(null);
+          this.setVisible(true);
+        
     }
 
     MachineMonitoringScreen machineScreen = new MachineMonitoringScreen();
@@ -189,15 +194,13 @@ public class LoginScreen extends javax.swing.JFrame {
                                if(machineScreen == null){
                                     machineScreen = new MachineMonitoringScreen();
                                     machineScreen.setMachineKey(machineKey);
-                                    machineScreen.setLocationRelativeTo(null);
-                                    machineScreen.setVisible(true);
-                                    machineScreen.setResizable(false);
+                                    SystemTrayTest.createAndShowGUI(machineScreen);
+                                    this.dispose();
                                 }
                                else{
                                     machineScreen.setMachineKey(machineKey);
-                                    machineScreen.setLocationRelativeTo(null);
-                                    machineScreen.setVisible(true);
-                                    machineScreen.setResizable(false);
+                                    SystemTrayTest.createAndShowGUI(machineScreen);
+                                    this.dispose();
                                 }
                            }
                        }
