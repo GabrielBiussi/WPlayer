@@ -14,20 +14,16 @@ import wplayer.database.DBConnection;
  */
 public class LoginScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginScreen
-     */
+    MachineMonitoringScreen machineScreen;
+    
     public LoginScreen() {
       
         initComponents();
-          this.setResizable(true);
-          this.setLocationRelativeTo(null);
-          this.setVisible(true);
+        this.setResizable(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
         
     }
-
-    MachineMonitoringScreen machineScreen;
-    
   
     
     @SuppressWarnings("unchecked")
@@ -36,11 +32,10 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         lblEmail = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
-        linkForgetPass = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         lblCopyright = new javax.swing.JLabel();
 
@@ -60,10 +55,6 @@ public class LoginScreen extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-
-        linkForgetPass.setForeground(new java.awt.Color(254, 254, 254));
-        linkForgetPass.setText("<html><u>Esqueci minha senha</u></html>");
-        linkForgetPass.setToolTipText("");
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-login.png"))); // NOI18N
 
@@ -90,12 +81,12 @@ public class LoginScreen extends javax.swing.JFrame {
                             .addComponent(lblPassword))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(linkForgetPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtEmail)
-                            .addComponent(txtPassword))))
+                            .addComponent(txtPassword)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(113, 113, 113)
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(56, 56, 56))
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,11 +102,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPassword))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(linkForgetPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(26, 26, 26)
+                .addComponent(btnLogin)
+                .addGap(37, 37, 37)
                 .addComponent(lblCopyright)
                 .addGap(21, 21, 21))
         );
@@ -174,9 +163,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 }
                 
                 if(pass.equals(txtPassword.getText())){
-                    String machineKey = JOptionPane.showInputDialog("Digite a Machine Key: ");
-                    
                     System.out.println("Senhas iguais");
+                    
+                    String machineKey = JOptionPane.showInputDialog("Digite a Machine Key: ");
                     
                     if(!machineKey.isEmpty() && machineKey != null){
                         
@@ -192,19 +181,14 @@ public class LoginScreen extends javax.swing.JFrame {
                         
                        if(!machines.isEmpty()){
                            if(machines.contains(machineKey)){
-                            
-                               if(machineScreen == null){
                                     machineScreen = new MachineMonitoringScreen();
                                     machineScreen.setMachineKey(machineKey);
                                     machineScreen.setLoginScreen(this);
                                     SystemTrayTest.createAndShowGUI(machineScreen);
                                     this.setVisible(false);
                                 }
-                               
                            }
                        }
-                    }
-                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Senha Incorreta!");
                 }
@@ -262,7 +246,6 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblPassword;
-    private javax.swing.JLabel linkForgetPass;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables

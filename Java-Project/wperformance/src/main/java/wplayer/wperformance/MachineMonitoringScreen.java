@@ -5,8 +5,6 @@
  */
 package wplayer.wperformance;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 import oshi.SystemInfo;
@@ -14,7 +12,7 @@ import oshi.software.os.OSFileStore;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.WindowConstants;
+import java.util.ArrayList;
 import wplayer.database.DBConnection;
 
 /**
@@ -23,7 +21,8 @@ import wplayer.database.DBConnection;
  */
 public class MachineMonitoringScreen extends javax.swing.JFrame {      
     private String machineKey;
-    
+    private ArrayList<Timer> timers = new ArrayList<Timer>();
+    private Boolean isFirst = true;
     SystemInfo oshi = new SystemInfo();
     SystemTrayTest frame = new SystemTrayTest();
     LoginScreen loginScreen;
@@ -56,6 +55,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         long delay = 1000L;
         long period = 1000L;
         timer.scheduleAtFixedRate(task, delay, period);
+        timers.add(timer);
     }
     
     private void counterdb() {
@@ -74,7 +74,10 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         long delay = 60000L;
         long period = 60000L;
         timer.scheduleAtFixedRate(task, delay, period);
+        timers.add(timer);
     }
+    
+    
 
     private void getdata() {
         //captando dados por meio da instancia OSHI
@@ -84,8 +87,8 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         ramspace = (((ramspace / 1024) / 1024) / 1024);
         double discspace = 0;
 
-        for (int i = 0; i < disc.length; i++) {
-            discspace += disc[i].getTotalSpace();
+        for (OSFileStore disc1 : disc) {
+            discspace += disc1.getTotalSpace();
         }
 
         discspace = (((discspace / 1024) / 1024) / 1024);
@@ -109,23 +112,34 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         
         //calculos do disco
         double usabledisc = 0;
-         for (int i = 0; i < disc.length; i++) {
-            usabledisc += disc[i].getUsableSpace();
+        for (OSFileStore disc1 : disc) {
+            usabledisc += disc1.getUsableSpace();
         }
-         usabledisc = (((usabledisc/1024)/1024)/1024);
+        usabledisc = (((usabledisc/1024)/1024)/1024);
         discofinal = 1f- usabledisc/discspace;
         
         updatenumbers(load,ram,discofinal);
-        
-        
+ 
+    }
+    
+    private Boolean isFirstLoop(){
+        if(isFirst){
+            isFirst = false;
+            return true;
+        }
+        return false;
     }
 
     private void updatedata(String cpuname, float ramspace, double discspace) {
-        jLabel6.setText(String.format(cpuname));
-        jLabel7.setText(String.format(" %.2fGB de Ram Usável", ramspace));
-        jLabel8.setText(String.format("%.2fGB", discspace));
+        String dsCpu = String.format(cpuname);
+        String dsRam = String.format(" %.2fGB de Ram Usável", ramspace);
+        String dsDisc = String.format("%.2fGB", discspace);
+        jLabel6.setText(dsCpu);
+        jLabel7.setText(dsRam);
+        jLabel8.setText(dsDisc);
         
-
+        if(isFirstLoop())
+            updateHardwareInfo(dsCpu, dsRam, dsDisc);
     }
     
     private void updatenumbers(double load,double ram,double discofinal){
@@ -147,7 +161,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         insertData(load, ram, discofinal, null, machineKey);
     }
     
-     public static void insertData(Double cpuA, Double ramA, Double discA, Double gpuA, String machineKey) {
+    public static void insertData(Double cpuA, Double ramA, Double discA, Double gpuA, String machineKey) {
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -178,25 +192,17 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
             System.err.println("ERRO: "+ex);
         }
     }
+    
+    private void cancelTimers(){
+        timers.forEach((timer) -> {
+            timer.cancel();
+        });
+    }
      
-    
-    
-     
-
-    
     public MachineMonitoringScreen() {
-        //Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
-        
-        
         initComponents();
         counter();
-        counterdb();
-        
-        
-        
-        //jPanel2 =  
+        counterdb(); 
     }
 
     /**
@@ -514,6 +520,8 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
         // TODO add your handling code here:        
         loginScreen.setVisible(true);
+        this.cancelTimers();
+        this.dispose();
         
     }//GEN-LAST:event_kButton1ActionPerformed
 
@@ -578,4 +586,34 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblprocessor;
     private keeptoo.KGradientPanel pbarra;
     // End of variables declaration//GEN-END:variables
+
+    private void updateHardwareInfo(String dsCpu, String dsRam, String dsDisc) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String table = "MACHINE";
+        String updateStatement = String.format("UPDATE %s "
+                                             + "SET DS_CPU = ?, "
+                                             + "DS_RAM = ?, "
+                                             + "DS_DISC = ? "
+                                             + "WHERE MACHINE_KEY = ?", table);
+        
+        try{            
+            connection = DBConnection.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+            
+            statement.setString(1, dsCpu);
+            statement.setString(2, dsRam);
+            statement.setString(3, dsDisc);
+            statement.setString(4, machineKey);
+            
+            statement.addBatch();
+            statement.executeBatch();
+            
+        }catch(SQLException ex){
+            System.err.println("Erro: "+ex);
+        }finally{
+            DBConnection.closeConnection(connection, statement);
+        }
+        
+    }
 }
