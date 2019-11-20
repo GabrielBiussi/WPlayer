@@ -26,14 +26,22 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     
     SystemInfo oshi = new SystemInfo();
     SystemTrayTest frame = new SystemTrayTest();
+    LoginScreen loginScreen;
+    
     //método pra captar ticks do processador (deve ser global caso voce faça local ele não funciona)
     long[] ticks = oshi.getHardware().getProcessor().getSystemCpuLoadTicks();
     double load ;
     double ram;
     double discofinal;
+    
+    
 
     public void setMachineKey(String machineKey) {
         this.machineKey = machineKey;
+    }
+
+    public void setLoginScreen(LoginScreen loginScreen) {
+        this.loginScreen = loginScreen;
     }
 
     private void counter() {
@@ -302,6 +310,11 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         kButton1.setkPressedColor(new java.awt.Color(0, 0, 0));
         kButton1.setkSelectedColor(new java.awt.Color(153, 153, 153));
         kButton1.setkStartColor(new java.awt.Color(0, 0, 102));
+        kButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 204));
         jLabel2.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
@@ -498,6 +511,12 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         this.setState(this.ICONIFIED);
     }//GEN-LAST:event_btcloseActionPerformed
 
+    private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
+        // TODO add your handling code here:        
+        loginScreen.setVisible(true);
+        
+    }//GEN-LAST:event_kButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -546,17 +565,11 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private rojerusan.componentes.RSProgressCircle jpcpu;
     private rojerusan.componentes.RSProgressCircle jpdisc;
     private rojerusan.componentes.RSProgressCircle jpram;
-    private rojerusan.componentes.RSProgressCircle jpram1;
-    private rojerusan.componentes.RSProgressCircle jpram2;
-    private rojerusan.componentes.RSProgressCircle jpram3;
     private rojerusan.componentes.RSProgressCircle jpram4;
     private keeptoo.KButton kButton1;
     private keeptoo.KGradientPanel kGradientPanel1;

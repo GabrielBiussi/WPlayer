@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import wplayer.database.DBConnection;
 
 /**
- *
+ 9synonsesn2fdld
  * @author petter
  */
 public class LoginScreen extends javax.swing.JFrame {
@@ -26,7 +26,9 @@ public class LoginScreen extends javax.swing.JFrame {
         
     }
 
-    MachineMonitoringScreen machineScreen = new MachineMonitoringScreen();
+    MachineMonitoringScreen machineScreen;
+    
+  
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -194,14 +196,11 @@ public class LoginScreen extends javax.swing.JFrame {
                                if(machineScreen == null){
                                     machineScreen = new MachineMonitoringScreen();
                                     machineScreen.setMachineKey(machineKey);
+                                    machineScreen.setLoginScreen(this);
                                     SystemTrayTest.createAndShowGUI(machineScreen);
-                                    this.dispose();
+                                    this.setVisible(false);
                                 }
-                               else{
-                                    machineScreen.setMachineKey(machineKey);
-                                    SystemTrayTest.createAndShowGUI(machineScreen);
-                                    this.dispose();
-                                }
+                               
                            }
                        }
                     }
