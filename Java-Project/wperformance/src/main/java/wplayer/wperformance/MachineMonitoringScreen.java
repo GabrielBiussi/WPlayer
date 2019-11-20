@@ -24,7 +24,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private ArrayList<Timer> timers = new ArrayList<Timer>();
     private Boolean isFirst = true;
     SystemInfo oshi = new SystemInfo();
-    SystemTrayTest frame = new SystemTrayTest();
+    ScreenGui frame = new ScreenGui();
     LoginScreen loginScreen;
     
     //método pra captar ticks do processador (deve ser global caso voce faça local ele não funciona)

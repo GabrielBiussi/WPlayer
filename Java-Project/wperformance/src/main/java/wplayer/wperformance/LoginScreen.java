@@ -184,7 +184,7 @@ public class LoginScreen extends javax.swing.JFrame {
                                     machineScreen = new MachineMonitoringScreen();
                                     machineScreen.setMachineKey(machineKey);
                                     machineScreen.setLoginScreen(this);
-                                    SystemTrayTest.createAndShowGUI(machineScreen);
+                                    ScreenGui.createAndShowGUI(machineScreen);
                                     this.setVisible(false);
                                 }
                            }

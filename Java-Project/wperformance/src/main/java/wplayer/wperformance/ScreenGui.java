@@ -10,7 +10,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.swing.*;
 
-public final class SystemTrayTest {
+public final class ScreenGui {
 
   public static void createAndShowGUI(MachineMonitoringScreen machineScreen) {
     final MachineMonitoringScreen frame = machineScreen;
