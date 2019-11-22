@@ -5,7 +5,6 @@
  */
 package wplayer.wperformance;
 
-import br.com.wmixvideo.slack.Slack;
 import com.profesorfalken.jsensors.model.components.Gpu;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,10 +15,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import wplayer.database.DBConnection;
+import wplayer.slack.Slack;
 
 /**
  *
  * @author Gabriel
+ * pqobl3vi1eursgp
  */
 public class MachineMonitoringScreen extends javax.swing.JFrame {      
     private String machineKey;
@@ -316,8 +317,11 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         );
 
         kButton1.setText("Logoff");
+        kButton1.setkBackGroundColor(new java.awt.Color(0, 0, 102));
         kButton1.setkEndColor(new java.awt.Color(153, 153, 153));
         kButton1.setkHoverEndColor(new java.awt.Color(0, 0, 102));
+        kButton1.setkHoverForeGround(new java.awt.Color(0, 51, 102));
+        kButton1.setkHoverStartColor(new java.awt.Color(0, 51, 102));
         kButton1.setkPressedColor(new java.awt.Color(0, 0, 0));
         kButton1.setkSelectedColor(new java.awt.Color(153, 153, 153));
         kButton1.setkStartColor(new java.awt.Color(0, 0, 102));
@@ -473,7 +477,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGap(336, 336, 336)
                         .addComponent(jLabel2)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -1,4 +1,4 @@
-package br.com.wmixvideo.slack;
+package wplayer.slack;
 
 /**
  * Created by Diego Fincatto on 19/03/16.

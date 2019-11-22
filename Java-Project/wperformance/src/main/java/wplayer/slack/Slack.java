@@ -1,4 +1,4 @@
-package br.com.wmixvideo.slack;
+package wplayer.slack;
 
 
 import java.io.DataOutputStream;
