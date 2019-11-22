@@ -5,6 +5,8 @@
  */
 package wplayer.wperformance;
 
+import br.com.wmixvideo.slack.Slack;
+import com.profesorfalken.jsensors.model.components.Gpu;
 import java.util.Timer;
 import java.util.TimerTask;
 import oshi.SystemInfo;
@@ -23,6 +25,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private String machineKey;
     private ArrayList<Timer> timers = new ArrayList<Timer>();
     private Boolean isFirst = true;
+    private Gpu gpu = GpuMonitor.getGpu();
     SystemInfo oshi = new SystemInfo();
     ScreenGui frame = new ScreenGui();
     LoginScreen loginScreen;
@@ -32,7 +35,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     double load ;
     double ram;
     double discofinal;
-    
+    double gpuPercent;
     
 
     public void setMachineKey(String machineKey) {
@@ -92,7 +95,8 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         }
 
         discspace = (((discspace / 1024) / 1024) / 1024);
-        updatedata(cpuname, ramspace, discspace);
+        String dsGpu = GpuMonitor.getGpuName(gpu);
+        updatedata(cpuname, ramspace, discspace, dsGpu);
         calculatedata(ramspace,discspace);
     }
     
@@ -117,8 +121,9 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         }
         usabledisc = (((usabledisc/1024)/1024)/1024);
         discofinal = 1f- usabledisc/discspace;
+        gpuPercent = GpuMonitor.getGpuPercent(gpu);
         
-        updatenumbers(load,ram,discofinal);
+        updatenumbers(load, ram, discofinal, gpuPercent);
  
     }
     
@@ -130,35 +135,35 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         return false;
     }
 
-    private void updatedata(String cpuname, float ramspace, double discspace) {
-        String dsCpu = String.format(cpuname);
-        String dsRam = String.format(" %.2fGB de Ram Usável", ramspace);
-        String dsDisc = String.format("%.2fGB", discspace);
+    private void updatedata(String cpuName, float ramSpace, double discSpace, String gpuName) {
+        String dsCpu = String.format(cpuName);
+        String dsRam = String.format(" %.2fGB de Ram Usável", ramSpace);
+        String dsDisc = String.format("%.2fGB", discSpace);
+        String dsGpu = String.format(gpuName);
         jLabel6.setText(dsCpu);
         jLabel7.setText(dsRam);
         jLabel8.setText(dsDisc);
+        jLabel9.setText(dsGpu);
         
         if(isFirstLoop())
-            updateHardwareInfo(dsCpu, dsRam, dsDisc);
+            updateHardwareInfo(dsCpu, dsRam, dsDisc, dsGpu);
     }
     
-    private void updatenumbers(double load,double ram,double discofinal){
+    private void updatenumbers(double load,double ram,double discofinal, double gpuPercent){
         load = load *100;
         ram = ram * 100;
         discofinal = discofinal * 100;
         
-        
-        
         jpcpu.setValue((int) load);
         jpram.setValue((int) ram);
         jpdisc.setValue((int) discofinal);
-        
-        
+        jpram4.setValue((int) gpuPercent);
+        checkUsage((int) load, (int) ram, (int) discofinal, (int) gpuPercent);
         
     }
     
     private void insertdb(double load,double ram,double discofinal){
-        insertData(load, ram, discofinal, null, machineKey);
+        insertData(load, ram, discofinal, gpuPercent, machineKey);
     }
     
     public static void insertData(Double cpuA, Double ramA, Double discA, Double gpuA, String machineKey) {
@@ -368,7 +373,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jpram, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -413,7 +418,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jpram4, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -449,7 +454,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                                         .addGap(26, 26, 26)
                                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(373, 373, 373)
+                                .addGap(391, 391, 391)
                                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(kGradientPanel1Layout.createSequentialGroup()
@@ -468,7 +473,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGap(336, 336, 336)
                         .addComponent(jLabel2)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +491,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
+                .addGap(47, 47, 47)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -495,10 +500,10 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel43)
                             .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -587,14 +592,15 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     private keeptoo.KGradientPanel pbarra;
     // End of variables declaration//GEN-END:variables
 
-    private void updateHardwareInfo(String dsCpu, String dsRam, String dsDisc) {
+    private void updateHardwareInfo(String dsCpu, String dsRam, String dsDisc, String dsGpu) {
         Connection connection = null;
         PreparedStatement statement = null;
         String table = "MACHINE";
         String updateStatement = String.format("UPDATE %s "
                                              + "SET DS_CPU = ?, "
                                              + "DS_RAM = ?, "
-                                             + "DS_DISC = ? "
+                                             + "DS_DISC = ? , "
+                                             + "DS_GPU = ? "
                                              + "WHERE MACHINE_KEY = ?", table);
         
         try{            
@@ -604,7 +610,8 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
             statement.setString(1, dsCpu);
             statement.setString(2, dsRam);
             statement.setString(3, dsDisc);
-            statement.setString(4, machineKey);
+            statement.setString(4, dsGpu);
+            statement.setString(5, machineKey);
             
             statement.addBatch();
             statement.executeBatch();
@@ -615,5 +622,26 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
             DBConnection.closeConnection(connection, statement);
         }
         
+    }
+    
+    private void checkUsage(Integer cpuPercent, Integer ramPercent, Integer discPercent, Integer gpuPer){
+        if(cpuPercent > 80 || ramPercent > 80 || discPercent > 80 || gpuPer > 80)
+            sendSlackMessage(String.format(
+                    "A máquina com o ID: %s está sobrecarregada:\n" +
+                    "CPU: %d\n" +
+                    "RAM: %d\n" +
+                    "DISCO: %d\n" +
+                    "GPU: %d.",
+                    machineKey, cpuPercent, ramPercent, discPercent, gpuPer));
+    }
+    
+    private void sendSlackMessage(String message){
+        try {
+            new Slack("https://hooks.slack.com/services/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")
+                .text(message)
+                .send();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
