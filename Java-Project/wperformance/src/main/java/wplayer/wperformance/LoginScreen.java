@@ -19,7 +19,7 @@ public class LoginScreen extends javax.swing.JFrame {
     public LoginScreen() {
       
         initComponents();
-        this.setResizable(true);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         

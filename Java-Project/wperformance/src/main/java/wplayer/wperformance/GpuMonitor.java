@@ -21,8 +21,14 @@ public class GpuMonitor {
     }
     
     public static Double getGpuPercent(Gpu gpu){
-        if(gpu != null)
-        return gpu.sensors.loads.get(0).value;
+        if(gpu != null){
+            
+            gpu.sensors.loads.forEach((load) -> {
+            System.out.println(load.value);
+            });
+            
+        return gpu.sensors.loads.size() == 3? gpu.sensors.loads.get(3).value: 0.0;
+        }
         
         return 0.0;
     }

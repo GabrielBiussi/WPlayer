@@ -641,7 +641,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
     
     private void sendSlackMessage(String message){
         try {
-            new Slack("https://hooks.slack.com/services/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")
+            new Slack("https://hooks.slack.com/services/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")
                 .text(message)
                 .send();
         } catch (Exception e) {
