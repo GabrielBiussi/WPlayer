@@ -6,6 +6,7 @@
 package wplayer.wperformance;
 
 import com.profesorfalken.jsensors.model.components.Gpu;
+import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 import oshi.SystemInfo;
@@ -207,6 +208,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
      
     public MachineMonitoringScreen() {
         initComponents();
+        Seticon();
         counter();
         counterdb(); 
     }
@@ -647,5 +649,9 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void Seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
     }
 }

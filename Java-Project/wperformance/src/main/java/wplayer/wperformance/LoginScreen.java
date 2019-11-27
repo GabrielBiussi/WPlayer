@@ -1,5 +1,6 @@
 package wplayer.wperformance;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ public class LoginScreen extends javax.swing.JFrame {
     public LoginScreen() {
       
         initComponents();
+        Seticon();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -249,4 +251,8 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables
+
+    private void Seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
+    }
 }
