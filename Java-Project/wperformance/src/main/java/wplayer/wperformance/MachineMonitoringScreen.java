@@ -281,7 +281,9 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         btclose.setBackground(new java.awt.Color(0, 0, 51));
         btclose.setBorder(null);
         btclose.setForeground(new java.awt.Color(0, 0, 51));
-        btclose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
+        btclose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete-button.png"))); // NOI18N
+        btclose.setAlignmentY(0.0F);
+        btclose.setIconTextGap(10);
         btclose.setkBackGroundColor(new java.awt.Color(0, 0, 102));
         btclose.setkEndColor(new java.awt.Color(0, 0, 102));
         btclose.setkForeGround(new java.awt.Color(0, 0, 102));
@@ -293,6 +295,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         btclose.setkPressedColor(new java.awt.Color(0, 0, 102));
         btclose.setkSelectedColor(new java.awt.Color(0, 0, 102));
         btclose.setkStartColor(new java.awt.Color(0, 0, 102));
+        btclose.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btclose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btcloseActionPerformed(evt);
@@ -307,15 +310,15 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblogo10, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btclose, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btclose, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pbarraLayout.setVerticalGroup(
             pbarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pbarraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblogo10)
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addComponent(btclose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(lblogo10))
+            .addComponent(btclose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         kButton1.setText("Logoff");
@@ -461,21 +464,22 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
                                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(391, 391, 391)
-                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel40)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel7))
-                                        .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                            .addGap(78, 78, 78)
-                                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel43)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel9)
-                                            .addGap(142, 142, 142)))
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                                .addGap(78, 78, 78)
+                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel43)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel9)
+                                                .addGap(142, 142, 142)))
+                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel40)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7))))))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGap(336, 336, 336)
                         .addComponent(jLabel2)))
@@ -484,8 +488,8 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addComponent(pbarra, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pbarra, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
