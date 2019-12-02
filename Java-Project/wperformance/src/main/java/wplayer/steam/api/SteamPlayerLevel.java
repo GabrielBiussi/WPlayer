@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -42,6 +43,7 @@ public class SteamPlayerLevel {
         try {
             return RequestAPI.getJSON(ENDPOINT+steamId);
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! "+ex);
             System.err.println("Erro: "+ex);
         }
         
@@ -80,6 +82,7 @@ public class SteamPlayerLevel {
             statement.execute();
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! "+ex);
             System.err.println("Erro:" +ex);
         }finally{
             DBConnection.closeConnection(connection, statement);

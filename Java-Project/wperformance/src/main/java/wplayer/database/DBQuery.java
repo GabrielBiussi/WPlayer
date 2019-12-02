@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -42,6 +43,7 @@ public class DBQuery {
             return gamesIds;
   
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro!Falha na conexão ao SQL: "+ex);
             System.err.println("Erro SQL: "+ex);
         }finally{
             DBConnection.closeConnection(connection, preparedStatement, resultSet);
@@ -69,6 +71,7 @@ public class DBQuery {
             return resultSet.isBeforeFirst();
                 
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Falha com (hasRowInTable): "+ex);
             System.err.println("Erro (hasRowInTable): "+ex);
         } finally{
             DBConnection.closeConnection(connection, statement, resultSet);
@@ -113,6 +116,7 @@ public class DBQuery {
                return listRows;
 
             }catch(SQLException ex){
+                CriarLog.WriteLog("Erro! Falha com (hasRowsInTable -IF): " +ex);
                 System.err.println("Erro (hasRowsInTable -IF): " +ex);
             }finally{
                 DBConnection.closeConnection(connection, statement, resultSet);
@@ -140,6 +144,7 @@ public class DBQuery {
                return listRows;
 
             }catch(SQLException ex){
+                CriarLog.WriteLog("Erro! Falha com (hasRowsInTable -ELSE): " +ex);
                 System.err.println("Erro (hasRowsInTable -ELSE): " +ex);
             }finally{
                 DBConnection.closeConnection(connection, statement, resultSet);

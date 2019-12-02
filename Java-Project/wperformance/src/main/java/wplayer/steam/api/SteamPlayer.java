@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.database.DBQuery;
+import wplayer.logtxt.CriarLog;
 
 public class SteamPlayer {
 
@@ -91,12 +92,14 @@ public static void updatePlayers(String steamId){
         statementUpdate.executeBatch();
        
     } catch (SQLException ex) {
+        CriarLog.WriteLog("Erro! Falha em Insert/Update Player " +ex + " "+ p.getId()+ " "+ p.getName());
         System.err.println("Erro ao Insert/Update Player " +ex + " "+ p.getId()+ " "+ p.getName());
     } finally{
         try {
             statementUpdate.close();
             statementInsert.close();
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Falha ao fechar UPDATE: "+ex);
             System.err.println("Erro ao fechar UPDATE: "+ex);
         }
         DBConnection.closeConnection(connection);
@@ -164,6 +167,7 @@ private static ArrayList<PlayerFields> getPlayersData(String steamId){
         return playersFields;
         
     } catch (IOException ex) {
+        CriarLog.WriteLog("Erro! Falha na aquisição de todos os Players: "+ex);
         System.err.println("Erro na aquisição de todos os Players: "+ex);
     }
     
@@ -204,6 +208,8 @@ private static ArrayList<String> getPlayerFriends(String steamId){
         return friendsIds;
         
     } catch (IOException ex) {
+        CriarLog.WriteLog("Erro! Falha na aquisição dos amigos do steamId: " 
+                            +steamId+ ": "+ex);
         System.err.println("Erro na aquisição dos amigos do steamId: " 
                             +steamId+ ": "+ex);
     }

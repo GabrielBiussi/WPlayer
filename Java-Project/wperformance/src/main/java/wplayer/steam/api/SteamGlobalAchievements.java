@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBQuery;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -55,6 +56,7 @@ public class SteamGlobalAchievements {
             return percentagesList;
             
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! Falha em percentagesList " +ex);
             System.err.println("Erro: "+ex);
         }
         

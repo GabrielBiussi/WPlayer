@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.json.JSONObject;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -29,6 +30,7 @@ public class RequestAPI {
                 System.out.println("Pausa para comer");
                 Thread.sleep(120000);
         } catch (InterruptedException ex) {
+                CriarLog.WriteLog("Erro! Falha na Requisição da API"+ex);
                 System.err.println("dale");
         }
         // Criação da variável InputStreamReader, abrindo conexão com a API) http.openStream()

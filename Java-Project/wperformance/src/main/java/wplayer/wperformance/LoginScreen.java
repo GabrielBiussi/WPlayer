@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import wplayer.database.DBConnection;
+import wplayer.logtxt.CriarLog;
 
 /**
  9synonsesn2fdld
@@ -19,6 +20,7 @@ public class LoginScreen extends javax.swing.JFrame {
     
     public LoginScreen() {
       
+        CriarLog.WriteLog("Login Realizado com Sucesso");
         initComponents();
         Seticon();
         this.setResizable(false);
@@ -196,6 +198,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 }
                 
             }catch(SQLException ex){
+                CriarLog.WriteLog("Erro!" +ex);
                 System.out.println("Erro:" +ex);
             }finally{
                 DBConnection.closeConnection(connection, statement, resultSet);

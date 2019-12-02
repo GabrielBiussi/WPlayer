@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -26,6 +27,7 @@ public class DBConnection {
         try {
             return DriverManager.getConnection(URL);
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Não foi possível abrir Conexão: " + ex);
             throw new RuntimeException("Erro ao abrir Conexão: ", ex);
         }
     }
@@ -35,6 +37,7 @@ public class DBConnection {
             if(connection != null)
             connection.close();
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Não foi possível fechar Conexão: " + ex);
             System.err.println("Erro ao fechar Conexão:" +ex);
         }
     }
@@ -44,6 +47,7 @@ public class DBConnection {
             if(statement != null)
             statement.close();
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Não foi possível fechar Statement: " + ex);
             System.err.println("Erro ao fechar Statement:" +ex);
         }
         
@@ -55,6 +59,7 @@ public class DBConnection {
             if(resultSet != null)
             resultSet.close();
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Não foi possível fechar ResultSet: " + ex);
             System.err.println("Erro ao fechar ResultSet:" +ex);
         }
         

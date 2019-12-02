@@ -42,8 +42,7 @@ public class CriarLog {
     }
     
     }catch (IOException erro){
-        
-        System.out.println("Erro!!!");
+        System.out.println("Erro 01!");
     }
     
     
@@ -66,19 +65,18 @@ public static void WriteLog(String Message) {
         FileWriter filewriter = new FileWriter(arquivo, true);
         BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
         
-        bufferedwriter.write("Log Criado no momento: " + logDados + " | " + Message);
+        bufferedwriter.write("" + logDados + " | " + Message);
         bufferedwriter.newLine();
         
         bufferedwriter.close();
         filewriter.close();
      
     }catch (IOException error){
-        System.out.println("SEILA");
+        System.out.println("Erro 02!");
         
     }
 }
 
 
 }
-
 

@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -83,12 +84,14 @@ public class SteamOwnedGames {
             statementUpdate.executeBatch();
             
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Falha nos Inserts/Updates: "+ex);
             System.err.println("Erro nos Inserts/Updates: "+ex);
             System.err.println("Erro nos Inserts/Updates: "+ex);
         } finally{
             try {
                 statementInsert.close();
             } catch (SQLException ex) {
+                CriarLog.WriteLog("Erro! Falha ao fechar Statement " +ex);
                 System.err.println("Erro ao fechar Statement: "+ex);
             }
             DBConnection.closeConnection(connection, statementUpdate);
@@ -125,6 +128,7 @@ public class SteamOwnedGames {
             return games;
             
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Falha na conexão com banco de dados: "+ex);
             System.err.println("Erro na conexão com banco de dados: "+ex);
         } finally{
             DBConnection.closeConnection(connection, prepareStatement, resultSet);
@@ -164,6 +168,7 @@ public class SteamOwnedGames {
             try {
                 Thread.sleep(60000);
             } catch (InterruptedException ex1) {
+                CriarLog.WriteLog("Erro! Falha em Thread.sleep(60000)"+ex);
                 System.err.println("Se não der, não deu");
             }
         }

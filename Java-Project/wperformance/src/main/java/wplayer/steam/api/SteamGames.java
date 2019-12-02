@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.database.DBQuery;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -189,8 +190,10 @@ public class SteamGames {
             }
            
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! (SteamGames.getFieldsDetails): " +ex);
             System.err.println("Erro (SteamGames.getFieldsDetails): " +ex);
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! com INSERT/UPDATE ("+id+") (SteamGames.getFieldsDetails): "+ex);
             System.err.println("Erro com INSERT/UPDATE ("+id+") (SteamGames.getFieldsDetails): "+ex);
         } finally{
             DBConnection.closeConnection(connection, statement);
@@ -221,6 +224,7 @@ public class SteamGames {
             return fullDataApps.getJSONObject("applist").getJSONArray("apps");
             
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! (SteamGames.getAllAppsId): " +ex);
             System.err.println("Erro (SteamGames.getAllAppsId): " +ex);
         }
         
@@ -296,6 +300,7 @@ public class SteamGames {
             return listIgnored;
                 
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! Falha em listIgnored "+ex);
             System.err.println("Erro lá: "+ex);
         }
         
@@ -345,6 +350,7 @@ public class SteamGames {
             return percentagesList;
             
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! Falha em percentagesList "+ex);
             System.err.println("Erro: "+ex);
         }
         

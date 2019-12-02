@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -54,6 +55,7 @@ public class SteamAchievements {
             return achievements;
             
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! Falha ao exibir Conquistas" +ex);
             System.err.println("Erro: "+ex);
         }
         
@@ -108,6 +110,7 @@ public class SteamAchievements {
             return gamesIds;
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! Falha ao exibir o ID dos Games" +ex);
             System.err.println("Erro: "+ex);
         }finally{
             DBConnection.closeConnection(connection, statement, resultSet);
@@ -173,6 +176,7 @@ public class SteamAchievements {
             }
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! (MAIS PROVAVEL): "+ex);
             System.err.println("Erro (MAIS PROVAVEL): "+ex);
         }finally{
             try{
@@ -180,6 +184,7 @@ public class SteamAchievements {
                     insertStatement.close();
             
             }catch(SQLException ex1){
+                CriarLog.WriteLog("Erro! Falha no insertStatement" +ex1);
                 System.err.println("Erro: "+ex1);
             }
             DBConnection.closeConnection(connection, updateStatement);

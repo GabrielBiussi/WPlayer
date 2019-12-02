@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import wplayer.database.DBConnection;
+import wplayer.logtxt.CriarLog;
 import wplayer.slack.Slack;
 
 /**
@@ -196,6 +197,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
             statement.executeBatch();
             
         } catch (SQLException ex) {
+            CriarLog.WriteLog("Erro! "+ex);
             System.err.println("ERRO: "+ex);
         }
     }
@@ -211,6 +213,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
         Seticon();
         counter();
         counterdb(); 
+        CriarLog.WriteLog("Monitoramento de Máquina realizado com Sucesso!");
     }
 
     /**
@@ -627,6 +630,7 @@ public class MachineMonitoringScreen extends javax.swing.JFrame {
             statement.executeBatch();
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! "+ex);
             System.err.println("Erro: "+ex);
         }finally{
             DBConnection.closeConnection(connection, statement);

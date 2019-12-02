@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import wplayer.database.DBConnection;
 import wplayer.json.ValidadeJSON;
+import wplayer.logtxt.CriarLog;
 
 /**
  *
@@ -47,6 +48,7 @@ public class SteamPlayerAchievements {
             return ValidadeJSON.getJSONObject(pageFull, "playerstats");
             
         } catch (IOException ex) {
+            CriarLog.WriteLog("Erro! "+ex);
             System.err.println("Erro: "+ex);
         }
         
@@ -108,6 +110,7 @@ public class SteamPlayerAchievements {
             statement.executeBatch();
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! Falha em  statement.executeBatch()  "+ex);
             System.err.println("Erro: "+ex);
         }finally{
             DBConnection.closeConnection(connection, statement);
@@ -137,6 +140,7 @@ public class SteamPlayerAchievements {
             return achievementsInDatabase;
             
         }catch(SQLException ex){
+            CriarLog.WriteLog("Erro! Falha ao retornar as conquistas do Banvo de Dados "+ex);
             System.err.println("Erro: "+ex);
         }finally{
             DBConnection.closeConnection(connection, statement, resultSet);
