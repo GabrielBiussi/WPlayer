@@ -55,7 +55,7 @@ public static void WriteLog(String Message) {
         File arquivo = new File("C://temp/file1.txt");
        
         
-        Format formater = new SimpleDateFormat("dd/MM/yyyy HH/mm/ss");
+        Format formater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date data = new Date();
         String logDados = formater.format(data);
         

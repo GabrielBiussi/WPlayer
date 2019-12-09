@@ -198,7 +198,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 }
                 
             }catch(SQLException ex){
-                CriarLog.WriteLog("Erro!" +ex);
+                CriarLog.WriteLog("Erro! Falha de Conexão ao Banco de Dados" +ex);
                 System.out.println("Erro:" +ex);
             }finally{
                 DBConnection.closeConnection(connection, statement, resultSet);
